@@ -1,0 +1,29 @@
+{
+	"env": {
+		"browser": true
+	},
+	"globals": {
+		"logger": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 8,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"extends": "eslint-config-lludol",
+	"plugins": [
+		"react"
+	],
+	"rules": {
+		"comma-dangle": ["error", {
+			"arrays": "always-multiline",
+			"objects": "always-multiline",
+			"imports": "always-multiline",
+			"exports": "always-multiline",
+			"functions": "ignore"
+		}],
+		"react/jsx-uses-vars": "error"
+	}
+}

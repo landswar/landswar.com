@@ -1,6 +1,6 @@
 # landswar.com
 
-[![dependency status](https://david-dm.org/landswar/landswar.com.svg)](https://david-dm.org/landswar/landswar.comgame)
+[![dependency status](https://david-dm.org/landswar/landswar.com.svg)](https://david-dm.org/landswar/landswar.com)
 [![dev-dependencies status](https://david-dm.org/landswar/landswar.com/dev-status.svg)](https://david-dm.org/landswar/landswar.com#info=devDependencies)
 
 The source of the [LandsWar website](https://www.landswar.com).
@@ -43,15 +43,15 @@ The website will be available at ```http://127.0.0.1:9000/```.
 
 There will be 3 different environments.
 
-### Development - [https://dev.landswar.com](https://dev.landswar.com)
+#### Development - [https://dev.landswar.com](https://dev.landswar.com)
 
 For developers.
 
-### Beta - [https://beta.landswar.com](https://beta.landswar.com)
+#### Beta - [https://beta.landswar.com](https://beta.landswar.com)
 
 For beta testers.
 
-### Production - [https://www.landswar.com](https://www.landswar.com)
+#### Production - [https://www.landswar.com](https://www.landswar.com)
 
 The current version of the website for everyone.
 
