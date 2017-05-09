@@ -1,36 +1,71 @@
 import { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-import Header from '../../containers/Header/Header.jsx';
-import Rooms from '../../containers/Rooms/Rooms.jsx';
-import Room from '../../containers/Room/Room.jsx';
-import FormPlayer from '../../components/FormPlayer/FormPlayer.jsx';
+import PrivateRoute from '../../components/Generic/PrivateRoute/PrivateRoute.jsx';
+//import UnlogRoute from '../../components/Generic/UnlogRoute/UnlogRoute.jsx';
+
+import Header from '../Header/Header.jsx';
+import Rooms from '../Rooms/Rooms.jsx';
+import Room from '../Room/Room.jsx';
+import Login from '../Login/Login.jsx';
+import Home from '../Home/Home.jsx';
+import Players from '../Players/Players.jsx';
+import Player from '../Player/Player.jsx';
 
 import './App.scss';
 
+/**
+ * App component
+ */
 class App extends Component {
+	/**
+ 	* Hook called before component mounted
+ 	*/
 	componentWillMount() {
 		const token = localStorage.getItem('landswar_token');
-		if (token) {
-			// Check token validity, and redirect
+    // Check token validity, and redirect
+		if (this.props.isLogin) {
+			this.props.redirect('/rooms');
 			logger.debug('TOKEN', token);
 		}
 	}
 
+	/**
+ 	* Hook called when state change
+	* @param {Object} old properties state before update
+ 	*/
+	componentDidUpdate(old) {
+		if (this.props.isLogin && this.props.isLogin !== old.isLogin) {
+			this.props.redirect('/rooms');
+		}
+	}
+
+	/**
+ 	* render
+	* @returns {JSX} return jsx
+ 	*/
 	render() {
+		const HomeComponent = this.props.isLogin ? Home : Login;
 		return (
-			<BrowserRouter>
-				<div className="app">
-					<Header/>
-					<div className="container-fluid content">
-						<Route exact path="/" component={FormPlayer}/>
-						<Route path="/rooms" component={Rooms}/>
-						<Route path="/room/:id" component={Room}/>
-					</div>
-				</div>
-			</BrowserRouter>
+      <div className="app">
+        <Header/>
+        <div className="container-fluid content">
+          <Route exact path="/" component={HomeComponent}/>
+					<PrivateRoute isLogin={this.props.isLogin} exact path="/rooms" component={Rooms}/>
+					<PrivateRoute isLogin={this.props.isLogin} exact path="/room/:id" component={Room}/>
+					<Route exact path="/players" component={Players}/>
+					<Route exact path="/player/:id" component={Player}/>
+        </div>
+      </div>
 		);
 	}
 }
 
-export default App;
+const mapStateToProps = (state) => ({ isLogin: state.isLogin });
+const mapDispatchToProps = (dispatch) => ({
+	redirect: (location) => dispatch(push(location)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

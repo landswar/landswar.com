@@ -4,3 +4,19 @@
 	}
 }
 
+/**
+ * Default Form css
+ */
+.form-group {
+	text-align: left;
+}
+
+.errors {
+	display: inline-block;
+
+	span {
+		display: block;
+		color: red;
+	}
+
+}

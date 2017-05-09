@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { Button, Modal as ModalB } from 'react-bootstrap';
 
+/**
+ * Modal component
+ */
 class Modal extends Component {
+	/**
+	 * constructor set state "showModal": false
+	 * @param {*} props props
+	 */
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -9,14 +16,24 @@ class Modal extends Component {
 		};
 	}
 
+	/**
+ 	* Open the modal
+ 	*/
 	open() {
 		this.setState({ showModal: true });
 	}
 
+	/**
+ 	* Close the modal
+ 	*/
 	close() {
 		this.setState({ showModal: false });
 	}
 
+	/**
+ 	* render
+	* @returns {JSX} return jsx
+ 	*/
 	render() {
 		return (
 			<ModalB show={this.state.showModal}>

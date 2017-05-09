@@ -1,11 +1,23 @@
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
+import { push } from 'react-router-redux';
 
+/**
+ * ItemRoom render in Rooms.jsx
+ */
 class ItemRoom extends Component {
+	/**
+ 	* Redirect to room
+ 	*/
 	joinRoom() {
-		this.props.history.push(`/room/${this.props.room.shortid}`);
+		this.props.redirect(`/room/${this.props.room.shortid}`);
 	}
 
+	/**
+ 	* render
+	* @returns {JSX} return jsx
+ 	*/
 	render() {
 		return (
 			<tr>
@@ -20,4 +32,9 @@ class ItemRoom extends Component {
 	}
 }
 
-export default ItemRoom;
+const mapStateToProps = () => ({})
+const mapDispatchToProps = (dispatch) => ({
+	redirect: (location) => dispatch(push(location))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemRoom);

@@ -1,17 +1,18 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { getRoom } from '../../redux/room/roomActions';
+import { getPlayer } from '../../redux/player/playerActions';
 
 /**
- * Room component
+ * Player component
+ * View /player/:id
  */
-class Room extends Component {
+class Player extends Component {
 	/**
  	* Hook called before component mounted
 	* Fetch room
  	*/
 	componentWillMount() {
-		this.props.getRoom(this.props.match.params.id);
+		this.props.getPlayer(this.props.match.params.id);
 	}
 
 	/**
@@ -22,7 +23,7 @@ class Room extends Component {
 		return (
 			<div>
 				<p>
-					Coming soon...
+					Player {this.props.player.nickname}
 				</p>
 			</div>
 		);
@@ -30,11 +31,11 @@ class Room extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	room: state.room,
+	player: state.player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	getRoom: (id) => dispatch(getRoom(id)),
+	getPlayer: (id) => dispatch(getPlayer(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -1,14 +1,13 @@
 import { SET_ROOMS, SET_ROOM } from './roomActions';
 
-const initialRoom = {
+export const formNewRoom = {
 	name:      '',
 	maxPlayer: 2,
 };
 
-export const formRoom = initialRoom;
-
 const initialState = {
 	rooms: [],
+	room: {},
 };
 
 export function roomsReducers(state = initialState.rooms, action) {
@@ -20,7 +19,7 @@ export function roomsReducers(state = initialState.rooms, action) {
 	}
 }
 
-export function currentRoomReducers(state = initialRoom, action) {
+export function roomReducers(state = initialState.room, action) {
 	switch (action.type) {
 	case SET_ROOM:
 		return action.room;

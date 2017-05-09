@@ -13,6 +13,10 @@ export function get(url) {
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
+			if (!responseJson || responseJson.error) {
+				reject(responseJson);
+				return;
+			}
 			resolve(responseJson);
 		}).catch((error) => {
 			logger.error(error);
@@ -33,6 +37,10 @@ export function post(url, data) {
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
+			if (!responseJson || responseJson.error) {
+				reject(responseJson);
+				return;
+			}
 			resolve(responseJson);
 		}).catch((error) => {
 			logger.error(error);

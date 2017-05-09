@@ -1,21 +1,30 @@
-import { SET_TOKEN } from './playerActions';
+import { SET_PLAYERS, SET_PLAYER } from './playerActions';
 
-const initialPlayer = {
-	id:       '',
-	nickname: '',
-	token:    '',
+export const formNewPlayer = {
+	email:           '',
+	nickname:        '',
+	password:        '',
+	passwordConfirm: '',
 };
-
-export const formPlayer = initialPlayer;
 
 const initialState = {
-	isLogin: false,
+	players: [],
+	player:  {},
 };
 
-export function loginReducers(state = initialState.isLogin, action) {
+export function playersReducers(state = initialState.players, action) {
 	switch (action.type) {
-	case SET_TOKEN:
-		return action.isLogin;
+	case SET_PLAYERS:
+		return action.players;
+	default:
+		return state;
+	}
+}
+
+export function playerReducers(state = initialState.player, action) {
+	switch (action.type) {
+	case SET_PLAYER:
+		return action.player;
 	default:
 		return state;
 	}
