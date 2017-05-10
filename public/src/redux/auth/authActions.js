@@ -7,7 +7,7 @@ export const SET_LOGIN = 'SET_LOGIN';
 
 /**
  * Set isLogin to true and store token in localstorage
- * @param {*} token token to set
+ * @param {String} token token to set
  * @returns {Function} dispatch function
  */
 export function setLogin(token) {
@@ -16,6 +16,20 @@ export function setLogin(token) {
 		dispatch({
 			type:    SET_LOGIN,
 			isLogin: true,
+		});
+	};
+}
+
+/**
+ * Set isLogin to false and remove the token from localstorage
+ * @returns {Function} dispatch function
+ */
+export function setLogout() {
+	return (dispatch) => {
+		localStorage.removeItem('landswar_token');
+		dispatch({
+			type:    SET_LOGIN,
+			isLogin: false,
 		});
 	};
 }
@@ -42,5 +56,26 @@ export function login(id, password) {
 				reject(error);
 			});
 		})));
+	};
+}
+
+/**
+ * POST /checkToken
+ * request checkToken if true redirect to rooms
+ * @param {String} token Token to check
+ * @returns {Function} login request
+ */
+export function loginByToken(token) {
+	return (dispatch) => {
+		post('/checkToken', {
+			token,
+		}).then((json) => {
+			dispatch(push('/rooms'));
+			dispatch(setLogin(token));
+			dispatch(actions.change('user', json));
+		}).catch((error) => {
+			dispatch(setLogout());
+			logger.error(error);
+		});
 	};
 }

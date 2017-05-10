@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import FacebookLogin from 'react-facebook-login';
+//import FacebookLogin from 'react-facebook-login';
 // import {Button} from 'react-bootstrap';
 
 import './Login.scss';
@@ -43,14 +43,6 @@ class LoginContainer extends Component {
                 }
 								<div className="footer-login">
 									<a className="item" onClick={this.toggleForm.bind(this)}>{this.state.showLogin ? 'Subscribe' : 'Login'}</a>
-									<FacebookLogin
-										cssClass="facebook-login item btn-primary"
-										appId="1088597931155576"
-										autoLoad={true}
-										fields="name,email,picture"
-										onClick={(res) => logger.debug(res)}
-										callback={(res) => logger.debug(res)}
-									/>
 								</div>
 						</div>
 		);
@@ -58,3 +50,13 @@ class LoginContainer extends Component {
 }
 
 export default LoginContainer;
+/*
+<FacebookLogin
+	cssClass="facebook-login item btn-primary"
+	appId="1088597931155576"
+	autoLoad={true}
+	fields="name,email,picture"
+	onClick={(res) => logger.debug(res)}
+	callback={(res) => logger.debug(res)}
+/>
+*/

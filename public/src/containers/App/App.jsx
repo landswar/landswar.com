@@ -24,11 +24,8 @@ class App extends Component {
  	* Hook called before component mounted
  	*/
 	componentWillMount() {
-		const token = localStorage.getItem('landswar_token');
-    // Check token validity, and redirect
 		if (this.props.isLogin) {
 			this.props.redirect('/rooms');
-			logger.debug('TOKEN', token);
 		}
 	}
 

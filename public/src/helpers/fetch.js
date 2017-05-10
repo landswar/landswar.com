@@ -2,11 +2,14 @@ import 'whatwg-fetch';
 
 const API_URL = process.env.API_URL;
 
+const getToken = () => localStorage.getItem('landswar_token');
+
 export function get(url) {
 	return new Promise((resolve, reject) => {
 		fetch(`${API_URL}${url}`, {
 			method:  'GET',
 			headers: {
+				Authorization: `Bearer ${getToken()}`,
 				Accept:         'application/json',
 				'Content-Type': 'application/json',
 			},
@@ -31,6 +34,7 @@ export function post(url, data) {
 			method:  'POST',
 			body:    JSON.stringify(data),
 			headers: {
+				Authorization: `Bearer ${getToken()}`,
 				Accept:         'application/json',
 				'Content-Type': 'application/json',
 			},
