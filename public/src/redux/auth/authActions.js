@@ -1,5 +1,4 @@
 import { actions } from 'react-redux-form';
-import { push } from 'react-router-redux';
 
 import { post } from '../../helpers/fetch';
 
@@ -48,7 +47,6 @@ export function login(id, password) {
 				id,
 				password,
 			}).then((json) => {
-				dispatch(push('/rooms'));
 				dispatch(setLogin(json.token));
 				dispatch(actions.change('user', json));
 				resolve(json);
@@ -70,7 +68,6 @@ export function loginByToken(token) {
 		post('/checkToken', {
 			token,
 		}).then((json) => {
-			dispatch(push('/rooms'));
 			dispatch(setLogin(token));
 			dispatch(actions.change('user', json));
 		}).catch((error) => {

@@ -10,17 +10,6 @@ import { required } from '../../../helpers/formValidators';
  * Login form
  */
 class FormLogin extends Component {
-  /**
-   * Component will mount hook.
-   * Check if token store and try to login with it
-   */
-	componentWillMount() {
-		const token = localStorage.getItem('landswar_token');
-		if (token && !this.props.isLogin) {
-	     this.props.loginByToken(token);
-		}
-	}
-
 	/**
 	 * On form submit
 	 * @param {*} player player model
@@ -64,8 +53,7 @@ class FormLogin extends Component {
 const mapStateToProps = (state) => ({ isLogin: state.isLogin });
 
 const mapDispatchToProps = (dispatch) => ({
-      login: (nickname, password, history) => dispatch(login(nickname, password, history)),
-      loginByToken: (token) => dispatch(loginByToken(token)),
+	login: (nickname, password, history) => dispatch(login(nickname, password, history)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormLogin);
