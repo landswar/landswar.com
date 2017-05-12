@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 
@@ -70,6 +70,10 @@ class Rooms extends Component {
 		);
 	}
 }
+
+Rooms.propTypes = {
+	rooms: React.PropTypes.array,
+};
 
 const mapStateToProps = (state) => ({ rooms: state.rooms });
 

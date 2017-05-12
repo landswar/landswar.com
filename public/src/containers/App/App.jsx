@@ -1,13 +1,11 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-// Actions
-import { loginByToken } from '../../redux/auth/authActions';
-
 // Components
 import PrivateRoute from '../../components/Generic/PrivateRoute/PrivateRoute.jsx';
+import Logout from '../../components/Logout/Logout.jsx';
 
 // Containers
 import Header from '../Header/Header.jsx';
@@ -25,23 +23,17 @@ import './App.scss';
  */
 class App extends Component {
 	/**
- 	* Hook called before component mounted
-	* If token in localstorage, try to connect
- 	*/
-	componentWillMount() {
-		const token = localStorage.getItem('landswar_token');
-		if (token && !this.props.isLogin) {
-			this.props.loginByToken(token);
-		}
-	}
-
-	/**
  	* Hook called when state change
 	* @param {Object} nextProps New properties state
  	*/
 	componentWillUpdate(nextProps) {
-		if (nextProps.isLogin && this.props.isLogin !== nextProps.isLogin) {
-			this.props.redirect('/rooms');
+		// If isLogin change
+		if (this.props.isLogin !== nextProps.isLogin) {
+			if (nextProps.isLogin) {
+				this.props.redirect('/rooms');
+			} else {
+				this.props.redirect('/');
+			}
 		}
 	}
 
@@ -58,18 +50,22 @@ class App extends Component {
 					<Route exact path="/" component={HomeComponent}/>
 					<PrivateRoute isLogin={this.props.isLogin} exact path="/rooms" component={Rooms}/>
 					<PrivateRoute isLogin={this.props.isLogin} exact path="/room/:id" component={Room}/>
-					<Route exact path="/players" component={Players}/>
-					<Route exact path="/player/:id" component={Player}/>
+					<PrivateRoute exact path="/players" component={Players}/>
+					<PrivateRoute exact path="/player/:id" component={Player}/>
+					<PrivateRoute exact path="/logout" component={Logout}/>
 				</div>
 			</div>
 		);
 	}
 }
 
+App.propTypes = {
+	isLogin: React.PropTypes.bool,
+};
+
 const mapStateToProps = (state) => ({ isLogin: state.isLogin });
 const mapDispatchToProps = (dispatch) => ({
-	redirect:     (location) => dispatch(push(location)),
-	loginByToken: (token) => dispatch(loginByToken(token)),
+	redirect: (location) => dispatch(push(location)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

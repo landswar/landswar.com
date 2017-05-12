@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Errors, Form, Control } from 'react-redux-form';
 import { Button } from 'react-bootstrap';
 
-import { /* isNicknameAvailable,*/createPlayer } from '../../../redux/player/playerActions';
+import { createPlayer } from '../../../redux/player/playerActions';
 import { minLength, match, required } from '../../../helpers/formValidators';
 
 /**
@@ -12,7 +12,7 @@ import { minLength, match, required } from '../../../helpers/formValidators';
 class FormPlayer extends Component {
 	/**
 	 * On form submit
-	 * @param {*} player player model
+	 * @param {Object} player player model
 	 */
 	onSubmit(player) {
 		this.props.createPlayer(player);

@@ -1,9 +1,9 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Errors, Form, Control } from 'react-redux-form';
 import { Button } from 'react-bootstrap';
 
-import { login, loginByToken } from '../../../redux/auth/authActions';
+import { login } from '../../../redux/auth/authActions';
 import { required } from '../../../helpers/formValidators';
 
 /**
@@ -12,7 +12,7 @@ import { required } from '../../../helpers/formValidators';
 class FormLogin extends Component {
 	/**
 	 * On form submit
-	 * @param {*} player player model
+	 * @param {Object} player player model
 	 */
 	onSubmit(player) {
 		this.props.login(player.nickname, player.password, this.props.history);
@@ -49,6 +49,11 @@ class FormLogin extends Component {
 		);
 	}
 }
+
+FormLogin.propTypes = {
+	isLogin: React.PropTypes.bool,
+};
+
 
 const mapStateToProps = (state) => ({ isLogin: state.isLogin });
 

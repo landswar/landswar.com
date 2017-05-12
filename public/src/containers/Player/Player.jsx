@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getPlayer } from '../../redux/player/playerActions';
 
@@ -29,6 +29,10 @@ class Player extends Component {
 		);
 	}
 }
+
+Player.propTypes = {
+	player: React.PropTypes.object,
+};
 
 const mapStateToProps = (state) => ({
 	player: state.player,

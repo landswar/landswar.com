@@ -1,6 +1,6 @@
 import { actions } from 'react-redux-form';
 
-import { post } from '../../helpers/fetch';
+import { post, get } from '../../helpers/fetch';
 
 export const SET_LOGIN = 'SET_LOGIN';
 
@@ -9,7 +9,7 @@ export const SET_LOGIN = 'SET_LOGIN';
  * @param {String} token token to set
  * @returns {Function} dispatch function
  */
-export function setLogin(token) {
+function setLogin(token) {
 	return (dispatch) => {
 		localStorage.setItem('landswar_token', token);
 		dispatch({
@@ -23,7 +23,7 @@ export function setLogin(token) {
  * Set isLogin to false and remove the token from localstorage
  * @returns {Function} dispatch function
  */
-export function setLogout() {
+function setLogout() {
 	return (dispatch) => {
 		localStorage.removeItem('landswar_token');
 		dispatch({
@@ -35,13 +35,13 @@ export function setLogout() {
 
 /**
  * POST /login
- * request login if true redirect to rooms
+ * request login
  * @param {String} id nickname or email
  * @param {String} password password
  * @returns {Function} login request
  */
 export function login(id, password) {
-	return (dispatch) => {
+	return (dispatch) =>
 		dispatch(actions.submit('user', new Promise((resolve, reject) => {
 			post('/login', {
 				id,
@@ -54,17 +54,16 @@ export function login(id, password) {
 				reject(error);
 			});
 		})));
-	};
 }
 
 /**
  * POST /checkToken
- * request checkToken if true redirect to rooms
+ * request checkToken
  * @param {String} token Token to check
  * @returns {Function} login request
  */
 export function loginByToken(token) {
-	return (dispatch) => {
+	return (dispatch) =>
 		post('/checkToken', {
 			token,
 		}).then((json) => {
@@ -74,5 +73,16 @@ export function loginByToken(token) {
 			dispatch(setLogout());
 			logger.error(error);
 		});
+}
+
+/**
+ * POST /logout
+ * request logout
+ * @returns {Function} logout request
+ */
+export function logout() {
+	return (dispatch) => {
+		dispatch(actions.reset('user'));
+		dispatch(setLogout());
 	};
 }

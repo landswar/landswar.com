@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table } from 'react-bootstrap';
 
@@ -47,6 +47,10 @@ class Players extends Component {
 		);
 	}
 }
+
+Players.propTypes = {
+	isLogin: React.PropTypes.array,
+};
 
 const mapStateToProps = (state) => ({ players: state.players });
 

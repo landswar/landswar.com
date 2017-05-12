@@ -32,9 +32,9 @@ class ItemRoom extends Component {
 	}
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch) => ({
-	redirect: (location) => dispatch(push(location))
+	redirect: (location) => dispatch(push(location)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemRoom);

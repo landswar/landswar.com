@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getRoom } from '../../redux/room/roomActions';
 
@@ -28,6 +28,10 @@ class Room extends Component {
 		);
 	}
 }
+
+Room.propTypes = {
+	room: React.PropTypes.object,
+};
 
 const mapStateToProps = (state) => ({
 	room: state.room,

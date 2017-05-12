@@ -13,7 +13,7 @@ import { minLength } from '../../../helpers/formValidators';
 class FormCreateRoom extends Component {
 	/**
 	 * On form submit
-	 * @param {*} room room model
+	 * @param {Object} room room model
 	 */
 	onSubmit(room) {
 		this.props.createRoom(room);

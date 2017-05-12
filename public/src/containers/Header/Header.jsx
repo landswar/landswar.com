@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -33,8 +33,7 @@ class Header extends Component {
 		return (
 			<nav className="header bg-primary navbar navbar-default">
 				<div className="navbar-header">
-					<Link className="navbar-brand" to="/">LogIn</Link>
-					<Link className="navbar-brand" to="/players">Players</Link>
+					<Link className="navbar-brand" to="/">Sign In</Link>
 				</div>
 			</nav>
 		);
@@ -51,6 +50,10 @@ class Header extends Component {
 		return this.renderLogOut();
 	}
 }
+
+Header.propTypes = {
+	isLogin: React.PropTypes.bool,
+};
 
 const mapStateToProps = (state) => ({ isLogin: state.isLogin });
 const mapDispatchToProps = () => ({});

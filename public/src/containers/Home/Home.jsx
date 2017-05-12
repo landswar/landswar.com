@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 /**
@@ -23,11 +23,13 @@ class Home extends Component {
 	}
 }
 
+Home.propTypes = {
+	user: React.PropTypes.object,
+};
+
 const mapStateToProps = (state) => ({
 	user: state.user,
 });
-const mapDispatchToProps = () => ({
-//	redirect: (location) => dispatch(push(location)),
-});
+const mapDispatchToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

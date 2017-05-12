@@ -1,36 +1,61 @@
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { combineReducers, createStore, applyMiddleware } from 'redux';
-import { createForms } from 'react-redux-form';
-import { routerReducer, routerMiddleware, ConnectedRouter } from 'react-router-redux';
-import createHistory from 'history/createMemoryHistory';
+import { push, ConnectedRouter } from 'react-router-redux';
+
+// Redux App
+import { store, history } from './redux/index';
+
+// Actions
+import { loginByToken } from './redux/auth/authActions';
+
+// Containers
+import App from './containers/App/App.jsx';
 
 import './config';
 
-import { authReducers, userModel } from './redux/auth/authReducers';
-import { playersReducers, playerReducers, formNewPlayer } from './redux/player/playerReducers';
-import { roomsReducers, roomReducers, formNewRoom } from './redux/room/roomReducers';
+/**
+ * Main class
+ */
+class Main {
+	/**
+	 * Main constructor
+	 */
+	constructor() {
+		this.token = localStorage.getItem('landswar_token');
+	}
 
-import App from './containers/App/App.jsx';
+	/**
+	 * Start the app
+	 * Try to login with token. If success redirect to /rooms
+	 */
+	start() {
+		if (!this.token) {
+			this.render();
+			return;
+		}
+		// TODO try with await !
+		store.dispatch(loginByToken(this.token)).then(() => {
+			if (store.getState().isLogin) {
+				store.dispatch(push('/rooms'));
+			}
+			this.render();
+		});
+	}
 
-const reducers = combineReducers({
-	...createForms({ user: userModel, newRoom: formNewRoom, newPlayer: formNewPlayer }),
-	isLogin: authReducers,
-	rooms:   roomsReducers,
-	room: 			roomReducers,
-	router:  routerReducer,
-	players:	playersReducers,
-	player:		playerReducers,
-});
+	/**
+	 * render the app
+	 */
+	render() {
+		ReactDOM.render(
+		<Provider store={store}>
+			<ConnectedRouter history={history}>
+				<App/>
+			</ConnectedRouter>
+		</Provider>, document.getElementById('root'));
+	}
 
-const history = createHistory();
-const middlewares = applyMiddleware(thunk, routerMiddleware(history));
-const store = createStore(reducers, middlewares);
+}
 
-ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-		<App/>
-    </ConnectedRouter>
-</Provider>, document.getElementById('root'));
+// API
+const main = new Main();
+main.start();
