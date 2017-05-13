@@ -18,6 +18,10 @@ class FormLogin extends Component {
 		this.props.login(player.nickname, player.password, this.props.history);
 	}
 
+  onSubmitFailed(player) {
+    console.log(player);
+  }
+
 	/**
  	* render
 	* @returns {JSX} return jsx
@@ -28,6 +32,7 @@ class FormLogin extends Component {
         className="form-login"
         model="user"
         onSubmit={this.onSubmit.bind(this)}
+        onSubmitFailed={ (player) => this.onSubmitFailed(player) }
         validateOn="submit">
         <Errors className="errors" model="user"/>
         <div className="form-group">

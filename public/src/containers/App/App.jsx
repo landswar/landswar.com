@@ -38,16 +38,15 @@ class App extends Component {
 	}
 
 	/**
- 	* render
+ 	* render when login
 	* @returns {JSX} return jsx
  	*/
-	render() {
-		const HomeComponent = this.props.isLogin ? Home : Login;
+	renderLogIn() {
 		return (
 			<div className="app">
 				<Header/>
 				<div className="container-fluid content">
-					<Route exact path="/" component={HomeComponent}/>
+					<Route exact path="/" component={Home}/>
 					<PrivateRoute isLogin={this.props.isLogin} exact path="/rooms" component={Rooms}/>
 					<PrivateRoute isLogin={this.props.isLogin} exact path="/room/:id" component={Room}/>
 					<PrivateRoute isLogin={this.props.isLogin} exact path="/players" component={Players}/>
@@ -56,6 +55,30 @@ class App extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	/**
+ 	* render when logout
+	* @returns {JSX} return jsx
+ 	*/
+	renderLogout() {
+		return (
+			<div className="app">
+				<Header/>
+				<div className="container-fluid content">
+					<Route exact path="/" component={Login}/>
+				</div>
+			</div>
+
+		);
+	}
+
+	/**
+ 	* render
+	* @returns {JSX} return jsx
+ 	*/
+	render() {
+		return this.props.isLogin ? this.renderLogIn() : this.renderLogout();
 	}
 }
 

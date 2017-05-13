@@ -1,6 +1,6 @@
 import { actions } from 'react-redux-form';
 
-import { post, get } from '../../helpers/fetch';
+import { post } from '../../helpers/fetch';
 
 export const SET_LOGIN = 'SET_LOGIN';
 
@@ -51,7 +51,7 @@ export function login(id, password) {
 				dispatch(actions.change('user', json));
 				resolve(json);
 			}).catch((error) => {
-				reject(error);
+				reject(error.message);
 			});
 		})));
 }
