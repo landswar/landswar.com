@@ -50,9 +50,9 @@ class App extends Component {
 					<Route exact path="/" component={HomeComponent}/>
 					<PrivateRoute isLogin={this.props.isLogin} exact path="/rooms" component={Rooms}/>
 					<PrivateRoute isLogin={this.props.isLogin} exact path="/room/:id" component={Room}/>
-					<PrivateRoute exact path="/players" component={Players}/>
-					<PrivateRoute exact path="/player/:id" component={Player}/>
-					<PrivateRoute exact path="/logout" component={Logout}/>
+					<PrivateRoute isLogin={this.props.isLogin} exact path="/players" component={Players}/>
+					<PrivateRoute isLogin={this.props.isLogin} exact path="/player/:id" component={Player}/>
+					<PrivateRoute isLogin={this.props.isLogin} exact path="/logout" component={Logout}/>
 				</div>
 			</div>
 		);
