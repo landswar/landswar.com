@@ -1,12 +1,23 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getRoom } from '../../redux/room/roomActions';
 
+/**
+ * Room component
+ */
 class Room extends Component {
+	/**
+ 	* Hook called before component mounted
+	* Fetch room
+ 	*/
 	componentWillMount() {
 		this.props.getRoom(this.props.match.params.id);
 	}
 
+	/**
+ 	* render
+	* @returns {JSX} return jsx
+ 	*/
 	render() {
 		return (
 			<div>
@@ -18,11 +29,15 @@ class Room extends Component {
 	}
 }
 
-const mapStateToProps = (state, ownProps) => ({
-	room: state.currentRoom,
+Room.propTypes = {
+	room: React.PropTypes.object,
+};
+
+const mapStateToProps = (state) => ({
+	room: state.room,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
 	getRoom: (id) => dispatch(getRoom(id)),
 });
 

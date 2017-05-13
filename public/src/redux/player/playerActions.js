@@ -1,29 +1,26 @@
 import { actions } from 'react-redux-form';
-import { post } from '../../helpers/fetch';
 
-export const SET_TOKEN = 'SET_TOKEN';
+import { post, get } from '../../helpers/fetch';
+import { login } from '../auth/authActions';
 
-export function setToken(token) {
+export const SET_PLAYERS = 'SET_PLAYERS';
+export const SET_PLAYER = 'SET_PLAYER';
+
+/**
+ * POST /players
+ * @param {Object} player player to create
+ * @return {Function} dispatch function
+ */
+export function createPlayer(player) {
 	return (dispatch) => {
-		localStorage.setItem('landswarToken', token);
-		dispatch({
-			type:    SET_TOKEN,
-			isLogin: true,
-		});
-	};
-}
-
-export function createPlayer(nickname, history) {
-	return (dispatch) => {
-		dispatch(actions.submit('player', new Promise((resolve, reject) => {
-			post('/players', { nickname })
-			.then((response) => {
-				if (response.statusCode === 400) {
-					reject(response.message);
-					return;
-				}
-				dispatch(setToken(response.token));
-				history.push('/rooms');
+		dispatch(actions.submit('newPlayer', new Promise((resolve, reject) => {
+			post('/players', {
+				email:    player.email,
+				nickname: player.nickname,
+				password: player.password,
+			}).then((response) => {
+				dispatch(actions.reset('newPlayer'));
+				dispatch(login(player.nickname, player.password));
 				resolve(response);
 			}).catch((error) => {
 				reject(error);
@@ -31,3 +28,46 @@ export function createPlayer(nickname, history) {
 		})));
 	};
 }
+
+
+/**
+ * GET /players
+ * @return {Function} get all player
+ */
+export function getPlayers() {
+	return (dispatch) => new Promise((resolve, reject) => {
+		get('/players').then((response) => {
+			dispatch({ type: SET_PLAYERS, players: response });
+			resolve(true);
+		}).catch((error) => {
+			reject(error);
+		});
+	});
+}
+
+/**
+ * GET /room
+ * @param {String} id Id of the player to get
+ * @return {Function} Get a specific player
+ * TODO refactor with async await !!!
+ */
+export function getPlayer(id) {
+	return (dispatch) => new Promise((resolve, reject) => {
+		get(`/players/${id}`).then((response) => {
+			dispatch({ type: SET_PLAYER, player: response });
+			resolve(response);
+		}).catch((error) => {
+			reject(error);
+		});
+	});
+}
+
+/*
+//TODO create route /players/isNicknameAvailable
+export const isNicknameAvailable = async(nickname, done) => {
+  const json = await post('/players', { nickname: nickname });
+  if (json && json.statusCode === 200)
+    done(true);
+  done(false);
+};
+*/

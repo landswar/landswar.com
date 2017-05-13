@@ -1,28 +1,46 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 
 import { getRooms } from '../../redux/room/roomActions';
 
-import Modal from '../../components/Modal/Modal.jsx';
-import FormRoom from '../../components/FormRoom/FormRoom.jsx';
+import Modal from '../../components/Generic/Modal/Modal.jsx';
+import FormRoom from '../../components/Forms/FormRoom/FormRoom.jsx';
 import ItemRoom from '../../components/ItemRoom/ItemRoom.jsx';
 
 import './Rooms.scss';
 
+/**
+ * Rooms component
+ * List all room
+ */
 class Rooms extends Component {
+	/**
+ 	* Hook called before component mounted
+	* Fetch rooms
+ 	*/
 	componentWillMount() {
 		this.props.getRooms();
 	}
 
+	/**
+	 * Open modal
+	 */
 	showModal() {
 		this.refs.modal.open();
 	}
 
+	/**
+	 * Close modal
+	 */
 	closeModal() {
 		this.refs.modal.close();
 	}
 
+	/**
+ 	* render
+	* @returns {JSX} return jsx
+ 	*/
 	render() {
 		return (
 			<div className="rooms">
@@ -53,9 +71,13 @@ class Rooms extends Component {
 	}
 }
 
-const mapStateToProps = (state, ownProps) => ({ rooms: state.rooms });
+Rooms.propTypes = {
+	rooms: React.PropTypes.array,
+};
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapStateToProps = (state) => ({ rooms: state.rooms });
+
+const mapDispatchToProps = (dispatch) => ({
 	getRooms: () => dispatch(getRooms()),
 });
 

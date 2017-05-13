@@ -1,26 +1,71 @@
-import { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Route, withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
-import Header from '../../containers/Header/Header.jsx';
+// Components
+import PrivateRoute from '../../components/Generic/PrivateRoute/PrivateRoute.jsx';
+import Logout from '../../components/Logout/Logout.jsx';
+
+// Containers
+import Header from '../Header/Header.jsx';
+import Rooms from '../Rooms/Rooms.jsx';
+import Room from '../Room/Room.jsx';
+import Login from '../Login/Login.jsx';
+import Home from '../Home/Home.jsx';
+import Players from '../Players/Players.jsx';
+import Player from '../Player/Player.jsx';
 
 import './App.scss';
 
+/**
+ * App component
+ */
 class App extends Component {
+	/**
+ 	* Hook called when state change
+	* @param {Object} nextProps New properties state
+ 	*/
+	componentWillUpdate(nextProps) {
+		// If isLogin change
+		if (this.props.isLogin !== nextProps.isLogin) {
+			if (nextProps.isLogin) {
+				this.props.redirect('/rooms');
+			} else {
+				this.props.redirect('/');
+			}
+		}
+	}
+
+	/**
+ 	* render
+	* @returns {JSX} return jsx
+ 	*/
 	render() {
+		const HomeComponent = this.props.isLogin ? Home : Login;
 		return (
-			<BrowserRouter>
-				<div className="app">
-					<div className="container-fluid content text-center">
-						<h3>LandsWar</h3>
-						<p>
-							Coming soon...<br/><br/>
-							<a href="https://github.com/landswar/landswar.com">More informations on GitHub</a>
-						</p>
-					</div>
+			<div className="app">
+				<Header/>
+				<div className="container-fluid content">
+					<Route exact path="/" component={HomeComponent}/>
+					<PrivateRoute isLogin={this.props.isLogin} exact path="/rooms" component={Rooms}/>
+					<PrivateRoute isLogin={this.props.isLogin} exact path="/room/:id" component={Room}/>
+					<PrivateRoute exact path="/players" component={Players}/>
+					<PrivateRoute exact path="/player/:id" component={Player}/>
+					<PrivateRoute exact path="/logout" component={Logout}/>
 				</div>
-			</BrowserRouter>
+			</div>
 		);
 	}
 }
 
-export default App;
+App.propTypes = {
+	isLogin: React.PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({ isLogin: state.isLogin });
+const mapDispatchToProps = (dispatch) => ({
+	redirect: (location) => dispatch(push(location)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

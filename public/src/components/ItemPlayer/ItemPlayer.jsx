@@ -4,14 +4,14 @@ import { Button } from 'react-bootstrap';
 import { push } from 'react-router-redux';
 
 /**
- * ItemRoom render in Rooms.jsx
+ * ItemPlayer render in Rooms.jsx
  */
-class ItemRoom extends Component {
+class ItemPlayer extends Component {
 	/**
  	* Redirect to room
  	*/
-	joinRoom() {
-		this.props.redirect(`/room/${this.props.room.shortid}`);
+	watchPlayer() {
+		this.props.redirect(`/player/${this.props.player.id}`);
 	}
 
 	/**
@@ -21,11 +21,11 @@ class ItemRoom extends Component {
 	render() {
 		return (
 			<tr>
-				<td>{this.props.room.id}</td>
-				<td>{this.props.room.name}</td>
-				<td>x/{this.props.room.maxPlayer}</td>
-				<td className="join-button">
-					<Button className="btn-primary" onClick={this.joinRoom.bind(this)}>Join</Button>
+				<td>{this.props.player.id}</td>
+				<td>{this.props.player.nickname}</td>
+				<td>Medals... TODO</td>
+				<td className="watch-button">
+					<Button className="btn-primary" onClick={this.watchPlayer.bind(this)}>Watch</Button>
 				</td>
 			</tr>
 		);
@@ -37,4 +37,4 @@ const mapDispatchToProps = (dispatch) => ({
 	redirect: (location) => dispatch(push(location)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemRoom);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemPlayer);
