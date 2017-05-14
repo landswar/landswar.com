@@ -1,6 +1,6 @@
 import { actions } from 'react-redux-form';
 
-import { post, get } from '../../helpers/fetch';
+import { post, get, put } from '../../helpers/fetch';
 import { login } from '../auth/authActions';
 
 export const SET_PLAYERS = 'SET_PLAYERS';
@@ -9,30 +9,29 @@ export const SET_PLAYER = 'SET_PLAYER';
 /**
  * POST /players
  * @param {Object} player player to create
- * @return {Function} dispatch function
+ * @return {Function} [dispatch] return Promise: Creating new player
  */
 export function createPlayer(player) {
-	return (dispatch) => {
-		dispatch(actions.submit('newPlayer', new Promise((resolve, reject) => {
+	return (dispatch) =>
+		dispatch(actions.submit('formPlayer', new Promise((resolve, reject) => {
 			post('/players', {
 				email:    player.email,
 				nickname: player.nickname,
 				password: player.password,
 			}).then((response) => {
-				dispatch(actions.reset('newPlayer'));
+				dispatch(actions.reset('formPlayer'));
 				dispatch(login(player.nickname, player.password));
 				resolve(response);
 			}).catch((error) => {
 				reject(error);
 			});
 		})));
-	};
 }
 
 
 /**
  * GET /players
- * @return {Function} get all player
+ * @return {Function} [dispatch] return Promise: Get all player
  */
 export function getPlayers() {
 	return (dispatch) => new Promise((resolve, reject) => {
@@ -48,8 +47,7 @@ export function getPlayers() {
 /**
  * GET /room
  * @param {String} id Id of the player to get
- * @return {Function} Get a specific player
- * TODO refactor with async await !!!
+ * @return {Function} [dispatch] return Promise: Get a specific player
  */
 export function getPlayer(id) {
 	return (dispatch) => new Promise((resolve, reject) => {
@@ -62,12 +60,21 @@ export function getPlayer(id) {
 	});
 }
 
-/*
-//TODO create route /players/isNicknameAvailable
-export const isNicknameAvailable = async(nickname, done) => {
-  const json = await post('/players', { nickname: nickname });
-  if (json && json.statusCode === 200)
-    done(true);
-  done(false);
-};
-*/
+/**
+ * GET /room
+ * @param {String} id Id of the player to get
+ * @return {Function} [dispatch] return Promise: Get a specific player
+ */
+export function updatePlayer(player) {
+	return (dispatch) => new Promise((resolve, reject) => {
+		put(`/players/${player.id}`, {
+			email:    player.email,
+			nickname: player.nickname,
+		}).then((response) => {
+			dispatch({ type: SET_PLAYER, player: response });
+			resolve(response);
+		}).catch((error) => {
+			reject(error);
+		});
+	});
+}

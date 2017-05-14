@@ -4,6 +4,12 @@ const initialState = {
 	isLogin: false,
 };
 
+/**
+ * Authentification reducer (property: isLogin)
+ * @param {Object} state State of isLogin
+ * @param {Object} action Action to reduce
+ * @return {Boolean} new state of isLogin
+ */
 export function authReducers(state = initialState.isLogin, action) {
 	switch (action.type) {
 	case SET_LOGIN:
@@ -13,7 +19,7 @@ export function authReducers(state = initialState.isLogin, action) {
 	}
 }
 
-export const userModel = {
+export const loginModel = {
 	nickname: '',
 	password: '',
 };

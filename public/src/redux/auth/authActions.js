@@ -2,6 +2,8 @@ import { actions } from 'react-redux-form';
 
 import { post } from '../../helpers/fetch';
 
+import { SET_PLAYER } from '../player/playerActions';
+
 export const SET_LOGIN = 'SET_LOGIN';
 
 /**
@@ -34,6 +36,19 @@ function setLogout() {
 }
 
 /**
+ * Helper function when login successfully
+ * @param {*} dispatch dispatch
+ * @param {*} json json response
+ * @param {*} token token
+ */
+function successLogin(dispatch, json, token) {
+	dispatch(setLogin(token));
+	dispatch({ type: SET_PLAYER, player: json });
+	dispatch(actions.change('playerForm', json));
+	dispatch(actions.reset('loginForm', json));
+}
+
+/**
  * POST /login
  * request login
  * @param {String} id nickname or email
@@ -42,15 +57,16 @@ function setLogout() {
  */
 export function login(id, password) {
 	return (dispatch) =>
-		dispatch(actions.submit('user', new Promise((resolve, reject) => {
+		dispatch(actions.submit('loginForm', new Promise((resolve, reject) => {
 			post('/login', {
 				id,
 				password,
-			}).then((json) => {
-				dispatch(setLogin(json.token));
-				dispatch(actions.change('user', json));
+			})
+			.then((json) => {
+				successLogin(dispatch, json, json.token);
 				resolve(json);
-			}).catch((error) => {
+			})
+			.catch((error) => {
 				reject(error.message);
 			});
 		})));
@@ -66,9 +82,9 @@ export function loginByToken(token) {
 	return (dispatch) =>
 		post('/checkToken', {
 			token,
-		}).then((json) => {
-			dispatch(setLogin(token));
-			dispatch(actions.change('user', json));
+		})
+		.then((json) => {
+			successLogin(dispatch, json, token);
 		}).catch((error) => {
 			dispatch(setLogout());
 			logger.error(error);
@@ -82,7 +98,8 @@ export function loginByToken(token) {
  */
 export function logout() {
 	return (dispatch) => {
-		dispatch(actions.reset('user'));
+		dispatch({ type: SET_PLAYER, player: {} });
+		dispatch(actions.reset('playerForm'));
 		dispatch(setLogout());
 	};
 }

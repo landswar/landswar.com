@@ -1,6 +1,6 @@
 import { SET_PLAYERS, SET_PLAYER } from './playerActions';
 
-export const formNewPlayer = {
+export const playerModel = {
 	email:           '',
 	nickname:        '',
 	password:        '',
@@ -12,6 +12,12 @@ const initialState = {
 	player:  {},
 };
 
+/**
+ * Players reducer (property: players)
+ * @param {Object} state State of players
+ * @param {Object} action Action to reduce
+ * @return {Array} new state of players
+ */
 export function playersReducers(state = initialState.players, action) {
 	switch (action.type) {
 	case SET_PLAYERS:
@@ -21,6 +27,12 @@ export function playersReducers(state = initialState.players, action) {
 	}
 }
 
+/**
+ * Player reducer (property: player)
+ * @param {Object} state State of player
+ * @param {Object} action Action to reduce
+ * @return {Array} new state of player
+ */
 export function playerReducers(state = initialState.player, action) {
 	switch (action.type) {
 	case SET_PLAYER:

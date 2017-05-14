@@ -4,12 +4,12 @@ import { createForms } from 'react-redux-form';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createMemoryHistory';
 
-import { authReducers, userModel } from './auth/authReducers';
-import { playersReducers, playerReducers, formNewPlayer } from './player/playerReducers';
+import { authReducers, loginModel } from './auth/authReducers';
+import { playersReducers, playerReducers, playerModel } from './player/playerReducers';
 import { roomsReducers, roomReducers, formNewRoom } from './room/roomReducers';
 
 const reducers = combineReducers({
-	...createForms({ user: userModel, newRoom: formNewRoom, newPlayer: formNewPlayer }),
+	...createForms({ loginForm: loginModel, newRoom: formNewRoom, playerForm: playerModel }),
 	isLogin: authReducers,
 	rooms:   roomsReducers,
 	room: 			roomReducers,

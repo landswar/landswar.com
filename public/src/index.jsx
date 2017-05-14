@@ -21,7 +21,9 @@ class Main {
 	 * Main constructor
 	 */
 	constructor() {
-		this.token = localStorage.getItem('landswar_token');
+		// Expose Method app.getToken()
+		this.getToken = () => localStorage.getItem('landswar_token');
+		this.token = this.getToken();
 	}
 
 	/**
