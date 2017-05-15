@@ -25,9 +25,9 @@ class FormCreateRoom extends Component {
  	*/
 	render() {
 		return (
-			<Form className="form-room" model="newRoom"
+			<Form className="form-room" model="roomForm"
 				onSubmit={this.onSubmit.bind(this)} validateOn="submit">
-				<Errors className="errors" model="newRoom"/>
+				<Errors className="errors" model="roomForm"/>
 				<div className="form-group">
 					<label>Name</label>
 					<Control.text className="form-control" model=".name"

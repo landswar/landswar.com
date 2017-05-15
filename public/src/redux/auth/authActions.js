@@ -37,9 +37,9 @@ function setLogout() {
 
 /**
  * Helper function when login successfully
- * @param {*} dispatch dispatch
- * @param {*} json json response
- * @param {*} token token
+ * @param {Function} dispatch dispatch
+ * @param {Object} json json response
+ * @param {String} token token
  */
 function successLogin(dispatch, json, token) {
 	dispatch(setLogin(token));
@@ -53,7 +53,7 @@ function successLogin(dispatch, json, token) {
  * request login
  * @param {String} id nickname or email
  * @param {String} password password
- * @returns {Function} login request
+ * @return {Function} [dispatch] return Promise: Login request
  */
 export function login(id, password) {
 	return (dispatch) =>
@@ -76,7 +76,7 @@ export function login(id, password) {
  * POST /checkToken
  * request checkToken
  * @param {String} token Token to check
- * @returns {Function} login request
+ * @return {Function} [dispatch] return Promise: Login request
  */
 export function loginByToken(token) {
 	return (dispatch) =>
@@ -94,7 +94,7 @@ export function loginByToken(token) {
 /**
  * POST /logout
  * request logout
- * @returns {Function} logout request
+ * @return {Function} [dispatch] return Promise: Logout request
  */
 export function logout() {
 	return (dispatch) => {

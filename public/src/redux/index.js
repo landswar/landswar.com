@@ -6,10 +6,10 @@ import createHistory from 'history/createMemoryHistory';
 
 import { authReducers, loginModel } from './auth/authReducers';
 import { playersReducers, playerReducers, playerModel } from './player/playerReducers';
-import { roomsReducers, roomReducers, formNewRoom } from './room/roomReducers';
+import { roomsReducers, roomReducers, roomModel } from './room/roomReducers';
 
 const reducers = combineReducers({
-	...createForms({ loginForm: loginModel, newRoom: formNewRoom, playerForm: playerModel }),
+	...createForms({ loginForm: loginModel, roomForm: roomModel, playerForm: playerModel }),
 	isLogin: authReducers,
 	rooms:   roomsReducers,
 	room: 			roomReducers,

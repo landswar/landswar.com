@@ -4,6 +4,11 @@ const initialState = {
 	isLogin: false,
 };
 
+export const loginModel = {
+	nickname: '',
+	password: '',
+};
+
 /**
  * Authentification reducer (property: isLogin)
  * @param {Object} state State of isLogin
@@ -18,8 +23,3 @@ export function authReducers(state = initialState.isLogin, action) {
 		return state;
 	}
 }
-
-export const loginModel = {
-	nickname: '',
-	password: '',
-};
