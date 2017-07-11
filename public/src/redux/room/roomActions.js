@@ -1,7 +1,7 @@
 import { actions } from 'react-redux-form';
 import { push } from 'react-router-redux';
 
-import { get, post } from '../../helpers/fetch';
+import { get, post, put, delet } from '../../helpers/fetch';
 
 export const SET_ROOMS = 'SET_ROOMS';
 export const SET_ROOM = 'SET_ROOM';
@@ -34,6 +34,7 @@ export function getRoom(id) {
 	return (dispatch) => new Promise((resolve, reject) => {
 		get(`/rooms/${id}`).then((response) => {
 			if (!response.error) {
+				dispatch(actions.change('roomForm', response));
 				dispatch({ type: SET_ROOM, room: response });
 				resolve(response);
 			} else {
@@ -66,4 +67,45 @@ export function createRoom(room) {
 			});
 		})));
 	};
+}
+
+/**
+ * PUT /room
+ * @param {String} room Room to update
+ * @return {Function} [dispatch] return Promise: Updating room
+ */
+export function updateRoom(room) {
+	return (dispatch) => new Promise((resolve, reject) => {
+		put(`/rooms/${room.shortid}`, { name: room.name }).then((response) => {
+			if (!response.error) {
+				dispatch({ type: SET_ROOM, room: response });
+				resolve(response);
+			} else {
+				reject(new Error(response.error));
+			}
+		}).catch((error) => {
+			reject(error);
+		});
+	});
+}
+
+/**
+ * PUT /room
+ * @param {String} shortid shortid of the room to delete
+ * @return {Function} [dispatch] return Promise: Updating room
+ */
+export function deleteRoom(shortid) {
+	return (dispatch) => new Promise((resolve, reject) => {
+		delet(`/rooms/${shortid}`).then((response) => {
+			if (!response.error) {
+				dispatch({ type: SET_ROOM, room: response });
+				dispatch(push('/rooms'));
+				resolve(response);
+			} else {
+				reject(new Error(response.error));
+			}
+		}).catch((error) => {
+			reject(error);
+		});
+	});
 }

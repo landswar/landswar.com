@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getRoom } from '../../redux/room/roomActions';
 
 import Game from '../../components/Game/Game.jsx';
+import FormRoom from '../../components/Forms/FormRoom/FormRoom.jsx';
 
 /**
  * Room component
@@ -17,10 +18,26 @@ class Room extends Component {
 	}
 
 	/**
+ 	* render for owner of the room
+	* @returns {JSX} return jsx
+ 	*/
+	renderOwner() {
+		return (
+			<div>
+				<FormRoom update/>
+				<Game/>
+			</div>
+		);
+	}
+
+	/**
  	* render
 	* @returns {JSX} return jsx
  	*/
 	render() {
+		if (this.props.room.owner === this.props.player.id) {
+			return this.renderOwner();
+		}
 		return (
 			<div>
 				<Game/>
@@ -34,7 +51,8 @@ Room.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	room: state.room,
+	room:   state.room,
+	player: state.player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
