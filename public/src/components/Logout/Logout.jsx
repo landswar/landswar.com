@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { logout } from '../../redux/auth/authActions';
 
 /**
- * Logout render in Rooms.jsx
+ * Logout component
  */
 class Logout extends Component {
 	/**
- 	* Redirect to room
+ 	* Logout and redirect to login
  	*/
 	componentWillMount() {
 		this.props.logout();

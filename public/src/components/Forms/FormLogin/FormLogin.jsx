@@ -15,12 +15,8 @@ class FormLogin extends Component {
 	 * @param {Object} player player model
 	 */
 	onSubmit(player) {
-		this.props.login(player.nickname, player.password, this.props.history);
+		this.props.login(player.nickname, player.password);
 	}
-
-  onSubmitFailed(player) {
-    console.log(player);
-  }
 
 	/**
  	* render
@@ -30,11 +26,10 @@ class FormLogin extends Component {
 		return (
       <Form
         className="form-login"
-        model="user"
+        model="loginForm"
         onSubmit={this.onSubmit.bind(this)}
-        onSubmitFailed={ (player) => this.onSubmitFailed(player) }
         validateOn="submit">
-        <Errors className="errors" model="user"/>
+        <Errors className="errors" model="loginForm"/>
         <div className="form-group">
           <label>Nickname/Email</label>
           <Control.text className="form-control" model=".nickname" validateOn="change"
@@ -63,7 +58,7 @@ FormLogin.propTypes = {
 const mapStateToProps = (state) => ({ isLogin: state.isLogin });
 
 const mapDispatchToProps = (dispatch) => ({
-	login: (nickname, password, history) => dispatch(login(nickname, password, history)),
+	login: (nickname, password) => dispatch(login(nickname, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormLogin);

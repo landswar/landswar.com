@@ -8,8 +8,7 @@ export const SET_ROOM = 'SET_ROOM';
 
 /**
  * GET /rooms
- * @return {Function} get all room
- * TODO refactor with async await !!!
+ * @return {Function} [dispatch] return Promise: Get all rooms
  */
 export function getRooms() {
 	return (dispatch) => new Promise((resolve, reject) => {
@@ -29,8 +28,7 @@ export function getRooms() {
 /**
  * GET /room
  * @param {String} id shortid of the room to get
- * @return {Function} get a specific room
- * TODO refactor with async await !!!
+ * @return {Function} [dispatch] return Promise: Get specific room
  */
 export function getRoom(id) {
 	return (dispatch) => new Promise((resolve, reject) => {
@@ -47,13 +45,18 @@ export function getRoom(id) {
 	});
 }
 
+/**
+ * POST /room
+ * @param {String} room Room to create
+ * @return {Function} [dispatch] return Promise: Creating new room
+ */
 export function createRoom(room) {
 	return (dispatch) => {
-		dispatch(actions.submit('newRoom', new Promise((resolve, reject) => {
+		dispatch(actions.submit('roomForm', new Promise((resolve, reject) => {
 			post('/rooms', { name: room.name }).then((response) => {
 				if (!response.error) {
-					dispatch(push(`/room/${response.shortid}`))
-					//dispatch(getRooms());
+					dispatch({ type: SET_ROOM, room: response });
+					dispatch(push(`/room/${response.shortid}`));
 					resolve(response);
 				} else {
 					reject(new Error(response.error));

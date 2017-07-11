@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+// Components
+import FormPlayer from '../../components/Forms/FormPlayer/FormPlayer.jsx';
+
 /**
  * Home Component of a player
  */
@@ -13,11 +16,7 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
-				<h2>Home player</h2>
-				<div className="vertical-align">
-					<h1>Nickname: </h1>
-					<h1>{this.props.user.nickname}</h1>
-				</div>
+				<FormPlayer/>
 			</div>
 		);
 	}

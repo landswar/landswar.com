@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getRoom } from '../../redux/room/roomActions';
 
+import Game from '../../components/Game/Game.jsx';
+
 /**
  * Room component
  */
@@ -21,9 +23,7 @@ class Room extends Component {
 	render() {
 		return (
 			<div>
-				<p>
-					Coming soon...
-				</p>
+				<Game/>
 			</div>
 		);
 	}
