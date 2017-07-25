@@ -13,19 +13,19 @@ export const SET_PLAYER = 'SET_PLAYER';
  */
 export function createPlayer(player) {
 	return (dispatch) =>
-		dispatch(actions.submit('formPlayer', new Promise((resolve, reject) => {
-			post('/players', {
-				email:    player.email,
-				nickname: player.nickname,
-				password: player.password,
-			}).then((response) => {
-				dispatch(actions.reset('formPlayer'));
-				dispatch(login(player.nickname, player.password));
-				resolve(response);
-			}).catch((error) => {
-				reject(error);
-			});
-		})));
+	dispatch(actions.submit('playerForm', new Promise((resolve, reject) => {
+		post('/players', {
+			email:    player.email,
+			nickname: player.nickname,
+			password: player.password,
+		}).then((response) => {
+			dispatch(login(player.nickname, player.password));
+			dispatch(actions.reset('playerForm', {}));
+			resolve(response);
+		}).catch((error) => {
+			reject(error.message);
+		});
+	})));
 }
 
 
@@ -45,7 +45,7 @@ export function getPlayers() {
 }
 
 /**
- * GET /room
+ * GET /player/:id
  * @param {String} id Id of the player to get
  * @return {Function} [dispatch] return Promise: Get a specific player
  */
@@ -61,8 +61,8 @@ export function getPlayer(id) {
 }
 
 /**
- * GET /room
- * @param {String} id Id of the player to get
+ * PUT /player/:id
+ * @param {String} player Player to update
  * @return {Function} [dispatch] return Promise: Get a specific player
  */
 export function updatePlayer(player) {
@@ -72,6 +72,19 @@ export function updatePlayer(player) {
 			nickname: player.nickname,
 		}).then((response) => {
 			dispatch({ type: SET_PLAYER, player: response });
+			resolve(response);
+		}).catch((error) => {
+			reject(error);
+		});
+	});
+}
+
+/**
+ * POST /friends
+ */
+export function addFriend(friend) {
+	return () => new Promise((resolve, reject) => {
+		post('/friends', { friend_id: friend.id }).then((response) => {
 			resolve(response);
 		}).catch((error) => {
 			reject(error);

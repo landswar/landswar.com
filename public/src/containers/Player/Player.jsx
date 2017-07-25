@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Panel } from 'react-bootstrap';
 import { getPlayer } from '../../redux/player/playerActions';
+import AddFriend from '../../components/Friend/AddFriend.jsx';
+
+import './Player.scss';
 
 /**
  * Player component
@@ -22,9 +26,13 @@ class Player extends Component {
 	render() {
 		return (
 			<div>
-				<p>
-					Player {this.props.player.nickname}
-				</p>
+				<AddFriend friend={this.props.player} className="add-friend"/>
+				<Panel header={(<h3>Player name</h3>)}>
+					{this.props.player.nickname}
+				</Panel>
+				<Panel header={(<h3>Player email</h3>)}>
+					{this.props.player.email}
+				</Panel>
 			</div>
 		);
 	}
