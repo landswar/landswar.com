@@ -76,7 +76,7 @@ export function createRoom(room) {
  */
 export function updateRoom(room) {
 	return (dispatch) => new Promise((resolve, reject) => {
-		put(`/rooms/${room.shortid}`, { name: room.name }).then((response) => {
+		put(`/rooms/${room.shortid}`, { name: room.name, idMap: room.idMap }).then((response) => {
 			if (!response.error) {
 				dispatch({ type: SET_ROOM, room: response });
 				resolve(response);

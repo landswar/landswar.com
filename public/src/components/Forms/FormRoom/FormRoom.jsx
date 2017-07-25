@@ -6,12 +6,13 @@ import { Button } from 'react-bootstrap';
 import { createRoom, updateRoom, deleteRoom } from '../../../redux/room/roomActions';
 import { getMaps } from '../../../redux/map/mapActions';
 
+import MapPreview from '../../MapPreview/MapPreview.jsx';
 import { minLength } from '../../../helpers/formValidators';
 
 /**
- * Form to create a room
+ * Form to create or update a room
  */
-class FormCreateRoom extends Component {
+class FormRoom extends Component {
 	/**
  	* Hook called before component mounted
 	* Fetch rooms
@@ -68,9 +69,10 @@ class FormCreateRoom extends Component {
 				<div className="form-group">
 					<label>Map</label>
 					<Control.select className="form-control" model=".idMap">
-					{this.props.maps.map((map) => (<option value={map.id}>{map.name}</option>))}
+					{this.props.maps.map((map) => (<option key={map.id} value={map.id}>{map.name}</option>))}
 					</Control.select>
 					<Errors className="errors" model=".idMap"/>
+					<MapPreview id={this.props.roomForm.idMap} height="48" width="48"/>
 				</div>
 				{
 					this.props.update ? (
@@ -86,8 +88,9 @@ class FormCreateRoom extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	room: state.room,
-	maps: state.maps,
+	room:     state.room,
+	roomForm: state.roomForm,
+	maps:     state.maps,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -97,4 +100,4 @@ const mapDispatchToProps = (dispatch) => ({
 	getMaps:    () => dispatch(getMaps()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormCreateRoom);
+export default connect(mapStateToProps, mapDispatchToProps)(FormRoom);
