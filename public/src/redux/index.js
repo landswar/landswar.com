@@ -6,6 +6,7 @@ import createHistory from 'history/createMemoryHistory';
 
 import { authReducers, loginModel } from './auth/authReducers';
 import { playersReducers, playerReducers, playerModel } from './player/playerReducers';
+import { mapsReducers, mapReducers } from './map/mapReducers';
 import { roomsReducers, roomReducers, roomModel } from './room/roomReducers';
 
 const reducers = combineReducers({
@@ -16,6 +17,8 @@ const reducers = combineReducers({
 	router:  routerReducer,
 	players:	playersReducers,
 	player:		playerReducers,
+	maps:	   mapsReducers,
+	map:		   mapReducers,
 });
 
 export const history = createHistory();

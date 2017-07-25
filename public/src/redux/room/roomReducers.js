@@ -3,6 +3,7 @@ import { SET_ROOMS, SET_ROOM } from './roomActions';
 export const roomModel = {
 	name:      '',
 	maxPlayer: 2,
+	idMap:     1,
 };
 
 const initialState = {

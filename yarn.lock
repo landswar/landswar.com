@@ -2393,7 +2393,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@1.2.0, hoist-non-react-statics@^1.0.3, hoist-non-react-statics@^1.2.0:
+hoist-non-react-statics@^1.0.3, hoist-non-react-statics@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
@@ -3054,10 +3054,6 @@ lodash.isarguments@^3.0.0:
 lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
-
-lodash.isempty@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.isempty/-/lodash.isempty-4.4.0.tgz#6f86cbedd8be4ec987be9aaf33c9684db1b31e7e"
 
 lodash.keys@^3.0.0:
   version "3.1.2"
@@ -4041,15 +4037,16 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-bootstrap@^0.30.8:
-  version "0.30.8"
-  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.30.8.tgz#4ceca8e138ce2351228c4a58d59db00c003ca9c0"
+react-bootstrap@^0.30.10:
+  version "0.30.10"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.30.10.tgz#dbba6909595f2af4d91937db0f96ec8c2df2d1a8"
   dependencies:
     babel-runtime "^6.11.6"
     classnames "^2.2.5"
     dom-helpers "^3.2.0"
     invariant "^2.2.1"
     keycode "^2.1.2"
+    prop-types "^15.5.6"
     react-overlays "^0.6.12"
     react-prop-types "^0.4.0"
     uncontrollable "^4.0.1"
@@ -4063,6 +4060,10 @@ react-dom@^15.5.4:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "~15.5.7"
+
+"react-facebook-login@github:keppelen/react-facebook-login":
+  version "3.6.2"
+  resolved "https://codeload.github.com/keppelen/react-facebook-login/tar.gz/9ddd0aed87143187875778c9ffc713c595d8a96b"
 
 react-overlays@^0.6.12:
   version "0.6.12"
@@ -4228,13 +4229,6 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
-
-redux-auth-wrapper@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/redux-auth-wrapper/-/redux-auth-wrapper-1.0.0.tgz#9aa16f8934563efe92f684b2ab201b4f01f50381"
-  dependencies:
-    hoist-non-react-statics "1.2.0"
-    lodash.isempty "4.4.0"
 
 redux-thunk@^2.2.0:
   version "2.2.0"

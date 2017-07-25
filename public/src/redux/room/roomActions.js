@@ -54,7 +54,7 @@ export function getRoom(id) {
 export function createRoom(room) {
 	return (dispatch) => {
 		dispatch(actions.submit('roomForm', new Promise((resolve, reject) => {
-			post('/rooms', { name: room.name }).then((response) => {
+			post('/rooms', { name: room.name, idMap: room.idMap }).then((response) => {
 				if (!response.error) {
 					dispatch({ type: SET_ROOM, room: response });
 					dispatch(push(`/room/${response.shortid}`));
