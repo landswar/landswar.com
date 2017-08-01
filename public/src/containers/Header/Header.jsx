@@ -5,21 +5,12 @@ import { push } from 'react-router-redux';
 
 import NotificationList from '../../components/NotificationList/NotificationList.jsx';
 
-import { getFriendRequest } from '../../redux/player/playerActions';
-
 import './Header.scss';
 
 /**
  * Header component
  */
 class Header extends Component {
-	/**
-	 * Hook on before component mount (ask for friend request)
-	 */
-	componentWillMount() {
-		this.props.getFriendRequest();
-	}
-
 	/**
 	 * onNotifClicked hook
 	 * @param {Object} notif notif clicked
@@ -84,8 +75,7 @@ const mapStateToProps = (state) => ({
 	friendRequest: state.friendRequest,
 });
 const mapDispatchToProps = (dispatch) => ({
-	getFriendRequest: () => dispatch(getFriendRequest()),
-	redirect:         (location) => dispatch(push(location)),
+	redirect: (location) => dispatch(push(location)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

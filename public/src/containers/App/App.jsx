@@ -19,7 +19,6 @@ import Player from '../Player/Player.jsx';
 
 // redux
 import { setNotif } from '../../redux/behavior/behaviorActions';
-import { getFriends } from '../../redux/player/playerActions';
 
 import './App.scss';
 
@@ -27,12 +26,6 @@ import './App.scss';
  * App component
  */
 class App extends Component {
-	/**
- 	* Hook called before component mounted
- 	*/
-	componentWillMount() {
-		this.props.getFriends();
-	}
 
 	/**
  	* Hook called before states change
@@ -121,7 +114,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	redirect: (location) => dispatch(push(location)),
 	setNotif: (error) => dispatch(setNotif(error)),
-	getFriends: () => dispatch(getFriends()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

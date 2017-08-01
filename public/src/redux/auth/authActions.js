@@ -1,8 +1,7 @@
 import { actions } from 'react-redux-form';
 
 import { post } from '../../helpers/fetch';
-
-import { SET_PLAYER } from '../player/playerActions';
+import { SET_PLAYER, getFriends, getFriendRequest } from '../player/playerActions';
 
 export const SET_LOGIN = 'SET_LOGIN';
 
@@ -46,6 +45,8 @@ function successLogin(dispatch, json, token) {
 	dispatch({ type: SET_PLAYER, player: json });
 	dispatch(actions.change('user', json));
 	dispatch(actions.reset('loginForm', json));
+	dispatch(getFriends());
+	dispatch(getFriendRequest());
 }
 
 /**
