@@ -45,6 +45,10 @@ const webpackConfig = {
 				],
 			},
 			{
+				test: /\.css$/,
+				use:  'css-loader',
+			},
+			{
 				test: /\.html$/,
 				use:  [
 					{

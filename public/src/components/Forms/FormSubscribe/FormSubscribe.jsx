@@ -26,11 +26,11 @@ class FormSubscribe extends Component {
 		return (
       <Form
         className="form-subscribe"
-        model="playerForm"
+        model="user"
         onSubmit={this.onSubmit.bind(this)}
         validators={{ '': { passwordsMatch: match('password', 'passwordConfirm') } }}
         validateOn="submit">
-        <Errors className="errors" model="playerForm" show="touched"
+        <Errors className="errors" model="user" show="touched"
         messages={{ passwordsMatch: 'Password confirmation error' }}/>
         <div className="form-group">
           <label>Email</label>

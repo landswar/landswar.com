@@ -5,22 +5,24 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createMemoryHistory';
 
 import { authReducers, loginModel } from './auth/authReducers';
-import { playersReducers, playerReducers, playerModel } from './player/playerReducers';
+import { playersReducers, playerReducers, userModel, friendsReducers, friendRequestReducers } from './player/playerReducers';
 import { mapsReducers, mapReducers } from './map/mapReducers';
 import { roomsReducers, roomReducers, roomModel } from './room/roomReducers';
 import { notifReducers } from './behavior/behaviorReducers';
 
 const reducers = combineReducers({
-	...createForms({ loginForm: loginModel, roomForm: roomModel, playerForm: playerModel }),
-	isLogin: authReducers,
-	rooms:   roomsReducers,
-	room: 			roomReducers,
-	router:  routerReducer,
-	players:	playersReducers,
-	player:		playerReducers,
-	maps:	   mapsReducers,
-	map:		   mapReducers,
-	notif:   notifReducers,
+	...createForms({ loginForm: loginModel, roomForm: roomModel, user: userModel }),
+	isLogin:       authReducers,
+	rooms:         roomsReducers,
+	room: 			      roomReducers,
+	router:        routerReducer,
+	players:	      playersReducers,
+	player:		      playerReducers,
+	maps:	         mapsReducers,
+	map:		         mapReducers,
+	notif:         notifReducers,
+	friends:       friendsReducers,
+	friendRequest: friendRequestReducers,
 });
 
 export const history = createHistory();

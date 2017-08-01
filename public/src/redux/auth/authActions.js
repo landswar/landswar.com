@@ -44,7 +44,7 @@ function setLogout() {
 function successLogin(dispatch, json, token) {
 	dispatch(setLogin(token));
 	dispatch({ type: SET_PLAYER, player: json });
-	dispatch(actions.change('playerForm', json));
+	dispatch(actions.change('user', json));
 	dispatch(actions.reset('loginForm', json));
 }
 
@@ -99,7 +99,7 @@ export function loginByToken(token) {
 export function logout() {
 	return (dispatch) => {
 		dispatch({ type: SET_PLAYER, player: {} });
-		dispatch(actions.reset('playerForm'));
+		dispatch(actions.reset('user'));
 		dispatch(setLogout());
 	};
 }

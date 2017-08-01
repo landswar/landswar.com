@@ -20,13 +20,36 @@ class Player extends Component {
 	}
 
 	/**
+ 	* Hook called before component mounted
+	* Fetch room
+ 	*/
+	componentDidUpdate() {
+		if (+this.props.match.params.id !== this.props.player.id) {
+			this.props.getPlayer(this.props.match.params.id);
+		}
+	}
+
+	/**
  	* render
 	* @returns {JSX} return jsx
  	*/
 	render() {
+		let mode = 'add';
+		if (this.props.friendRequestListId.indexOf(this.props.player.id) !== -1) {
+			mode = 'accept';
+		} else if (this.props.friendListId.indexOf(this.props.player.id) !== -1) {
+			mode = 'refuse';
+		} else if (this.props.user.id === this.props.player.id) {
+			mode = undefined;
+		}
+
 		return (
 			<div>
-				<AddFriend friend={this.props.player} className="add-friend"/>
+				{
+					mode ?
+						(<AddFriend mode={mode} friend={this.props.player} className="add-friend"/>) :
+						undefined
+				}
 				<Panel header={(<h3>Player name</h3>)}>
 					{this.props.player.nickname}
 				</Panel>
@@ -43,7 +66,10 @@ Player.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	player: state.player,
+	player:              state.player,
+	friendRequestListId: state.friendRequest.map((friend) => friend.id),
+	friendListId:        state.friends.map((friend) => friend.id),
+	user:                state.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({

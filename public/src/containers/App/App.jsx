@@ -19,6 +19,7 @@ import Player from '../Player/Player.jsx';
 
 // redux
 import { setNotif } from '../../redux/behavior/behaviorActions';
+import { getFriends } from '../../redux/player/playerActions';
 
 import './App.scss';
 
@@ -26,6 +27,13 @@ import './App.scss';
  * App component
  */
 class App extends Component {
+	/**
+ 	* Hook called before component mounted
+ 	*/
+	componentWillMount() {
+		this.props.getFriends();
+	}
+
 	/**
  	* Hook called before states change
 	* @param {Object} nextProps New properties state
@@ -59,7 +67,6 @@ class App extends Component {
 	* @returns {JSX} return jsx
  	*/
 	renderLogIn() {
-//				<ErrorNotifier message={this.props.error}/>
 		return (
 			<div className="app">
 				<NotificationSystem ref="notif"/>
@@ -83,6 +90,7 @@ class App extends Component {
 	renderLogout() {
 		return (
 			<div className="app">
+				<NotificationSystem ref="notif"/>
 				<Header/>
 				<div className="container-fluid content">
 					<Route exact path="/" component={Login}/>
@@ -113,6 +121,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	redirect: (location) => dispatch(push(location)),
 	setNotif: (error) => dispatch(setNotif(error)),
+	getFriends: () => dispatch(getFriends()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
