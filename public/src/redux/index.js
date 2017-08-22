@@ -9,6 +9,7 @@ import { playersReducers, playerReducers, userModel, friendsReducers, friendRequ
 import { mapsReducers, mapReducers } from './map/mapReducers';
 import { roomsReducers, roomReducers, roomModel } from './room/roomReducers';
 import { notifReducers } from './behavior/behaviorReducers';
+import { gameStartedReducers } from './game/gameReducers';
 
 const reducers = combineReducers({
 	...createForms({ loginForm: loginModel, roomForm: roomModel, user: userModel }),
@@ -23,6 +24,7 @@ const reducers = combineReducers({
 	notif:         notifReducers,
 	friends:       friendsReducers,
 	friendRequest: friendRequestReducers,
+	gameStarted:   gameStartedReducers,
 });
 
 export const history = createHistory();
