@@ -1,0 +1,3 @@
+[submodule "public/game"]
+	path = public/game
+	url = https://github.com/landswar/game.git
