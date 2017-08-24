@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- 8.4.0
+
+install:
+  - git clone --recursive https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
+  - cd $TRAVIS_REPO_SLUG
+  - git checkout -qf $TRAVIS_COMMIT
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: HrdsaVcesL3wlI2yv3JZrO2tILcmdulZYgWhsuskCUKdLUGbO5gwMcL79bSYMwAuGRU2N84bJkzKtuSKyGLVIRBBIj1Jc+G2OR5DqiZ+oy9sA54HNVaWlVxvixZr9izfhkRyyikTTuiXXP3EpfLr4VJypBxFgZBYmOwEY31HED+h0oHF4jBI1Ciy3NITl8cGZ1/r6f2o7AAAsz6tYPyaFaphB3gl+ctb/CgOUItfhAYUvR5OuKIOUV7ZFGuU0jBgL//7LGzE/4IOwWw7wSHlE8QaPOU6ccQe857/rOeT3teYsDPku1Mds1pHhANQEK4PFT2BnJ8XRORUsPwfVb8EeQuLYhWpu0E3e5DAdhYNnLecQZkjJJWjvNkJ86dNHrqlZmq5kuMqMDoLwJE9SN7lVwGIlzcd8rmdABHMjargrw0ZdKPYUkora4I+mQspkYDU2sj8yWSOxyQfBfjy6JRcyJprqIjIRYvfK9gDHxRpEDlQJi+tDK+E4Zrj4CNlWE/Cjl1N2tsTeRG7kwmbMQOWCNpRYgfqb6x4/5Sbup32iBzw/56k0/E41qWgnay9iUbeJxKcwVeIEpjaJ7YcnKHUxg4/hNJUuknPCwupH2lLuYwut1O1teZ6WCg/ewBxxCGKy84nhRuozyvfszoSuz8gDYr5FzS8CQ4o4HxzuSHPsy0=
+  app: landswar-com-dev
+  on:
+    repo: landswar/landswar.com
+    branch: dev
