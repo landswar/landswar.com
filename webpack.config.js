@@ -8,7 +8,7 @@ const distFolder = `${publicFolder}/dist`;
 
 const env = process.env.NODE_ENV || 'development';
 const apiUrl = process.env.LANDSWAR_API_URL || 'http://127.0.0.1:3000';
-const websocketsUrl = process.env.LANDSWAR_WEBSOCKETS_URL || 'http://127.0.0.1:3001';
+const websocketsUrl = process.env.LANDSWAR_WEBSOCKETS_URL || 'http://127.0.0.1:3000';
 
 const webpackConfig = {
 	entry: [
