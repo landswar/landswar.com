@@ -1,0 +1,4 @@
+{
+  "root": "public/dist",
+  "clean_urls": false
+}
