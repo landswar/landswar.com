@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import NotificationSystem from 'react-notification-system';
 
 // Components
 import PrivateRoute from '../../components/Generic/PrivateRoute/PrivateRoute.jsx';
@@ -16,14 +17,18 @@ import Home from '../Home/Home.jsx';
 import Players from '../Players/Players.jsx';
 import Player from '../Player/Player.jsx';
 
+// redux
+import { setNotif } from '../../redux/behavior/behaviorActions';
+
 import './App.scss';
 
 /**
  * App component
  */
 class App extends Component {
+
 	/**
- 	* Hook called when state change
+ 	* Hook called before states change
 	* @param {Object} nextProps New properties state
  	*/
 	componentWillUpdate(nextProps) {
@@ -38,12 +43,26 @@ class App extends Component {
 	}
 
 	/**
+ 	* Hook called after states change
+ 	*/
+	componentDidUpdate() {
+		if (this.props.notif && this.props.notif.message) {
+			this.refs.notif.addNotification({
+				message: this.props.notif.message,
+				level:   this.props.notif.level,
+			});
+			this.props.setNotif({});
+		}
+	}
+
+	/**
  	* render when login
 	* @returns {JSX} return jsx
  	*/
 	renderLogIn() {
 		return (
 			<div className="app">
+				<NotificationSystem ref="notif"/>
 				<Header/>
 				<div className="container-fluid content">
 					<Route exact path="/" component={Home}/>
@@ -64,6 +83,7 @@ class App extends Component {
 	renderLogout() {
 		return (
 			<div className="app">
+				<NotificationSystem ref="notif"/>
 				<Header/>
 				<div className="container-fluid content">
 					<Route exact path="/" component={Login}/>
@@ -84,11 +104,16 @@ class App extends Component {
 
 App.propTypes = {
 	isLogin: React.PropTypes.bool,
+	notif:   React.PropTypes.object,
 };
 
-const mapStateToProps = (state) => ({ isLogin: state.isLogin });
+const mapStateToProps = (state) => ({
+	isLogin: state.isLogin,
+	notif:   state.notif,
+});
 const mapDispatchToProps = (dispatch) => ({
 	redirect: (location) => dispatch(push(location)),
+	setNotif: (error) => dispatch(setNotif(error)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

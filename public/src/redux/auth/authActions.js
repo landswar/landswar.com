@@ -1,8 +1,7 @@
 import { actions } from 'react-redux-form';
 
 import { post } from '../../helpers/fetch';
-
-import { SET_PLAYER } from '../player/playerActions';
+import { SET_PLAYER, getFriends, getFriendRequest } from '../player/playerActions';
 
 export const SET_LOGIN = 'SET_LOGIN';
 
@@ -44,8 +43,10 @@ function setLogout() {
 function successLogin(dispatch, json, token) {
 	dispatch(setLogin(token));
 	dispatch({ type: SET_PLAYER, player: json });
-	dispatch(actions.change('playerForm', json));
+	dispatch(actions.change('user', json));
 	dispatch(actions.reset('loginForm', json));
+	dispatch(getFriends());
+	dispatch(getFriendRequest());
 }
 
 /**
@@ -99,7 +100,7 @@ export function loginByToken(token) {
 export function logout() {
 	return (dispatch) => {
 		dispatch({ type: SET_PLAYER, player: {} });
-		dispatch(actions.reset('playerForm'));
+		dispatch(actions.reset('user'));
 		dispatch(setLogout());
 	};
 }

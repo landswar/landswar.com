@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -7,6 +8,7 @@ const distFolder = `${publicFolder}/dist`;
 
 const env = process.env.NODE_ENV || 'development';
 const apiUrl = process.env.LANDSWAR_API_URL || 'http://127.0.0.1:3000';
+const websocketsUrl = process.env.LANDSWAR_WEBSOCKETS_URL || 'http://127.0.0.1:3001';
 
 const webpackConfig = {
 	entry: [
@@ -45,6 +47,10 @@ const webpackConfig = {
 				],
 			},
 			{
+				test: /\.css$/,
+				use:  'css-loader',
+			},
+			{
 				test: /\.html$/,
 				use:  [
 					{
@@ -64,7 +70,8 @@ const webpackConfig = {
 	},
 	plugins: [
 		new webpack.EnvironmentPlugin({
-			API_URL: apiUrl,
+			API_URL:        apiUrl,
+			WEBSOCKETS_URL: websocketsUrl,
 		}),
 		new webpack.ProvidePlugin({
 			React: 'react',
@@ -78,6 +85,14 @@ const webpackConfig = {
 			title:    'LandsWar',
 			template: `!!html-loader!${publicFolder}/index.html`,
 		}),
+		new CopyWebpackPlugin([
+			{ from: './public/game/phaser.min.js', to: `${distFolder}/phaser.min.js` },
+			{ from: './public/game/socket.io.min.js', to: `${distFolder}/socket.io.min.js` },
+			{ from: './public/game/landswar-game.js', to: `${distFolder}/landswar-game.js` },
+			{ from: './public/game/styles.css', to: `${distFolder}/styles.css` },
+			{ from: './public/game/track-webfont.woff', to: `${distFolder}/track-webfont.woff` },
+			{ from: './public/game/track-webfont.woff2', to: `${distFolder}/track-webfont.woff2` },
+		]),
 	],
 	devServer: {
 		contentBase:        distFolder,

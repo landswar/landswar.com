@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { push, ConnectedRouter } from 'react-router-redux';
+//import landswarGame from 'landswarGame';
 
 // Redux App
 import { store, history } from './redux/index';
@@ -31,6 +32,7 @@ class Main {
 	 * Try to login with token. If success redirect to /rooms
 	 */
 	start() {
+		console.log("here");
 		if (!this.token) {
 			this.render();
 			return;
