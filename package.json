@@ -10,7 +10,7 @@
     "build-dev": "NODE_ENV=development webpack",
     "lint": "eslint .",
     "fix-code": "eslint . --fix",
-    "postinstall": "yarn run build-dev"
+    "postinstall": "cd ./public/game && yarn && yarn run build && cd ../../ && yarn run build-dev"
   },
   "repository": {
     "type": "git",
