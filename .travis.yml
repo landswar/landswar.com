@@ -3,9 +3,10 @@ node_js:
 - 8.4.0
 
 install:
-  - git clone --recursive https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
-  - cd $TRAVIS_REPO_SLUG
-  - git checkout -qf $TRAVIS_COMMIT
+  - git submodule init && git submodule update
+  - cd public/game && git submodule init && git submodule update
+  - yarn && yarn run build
+  - cd ../.. && yarn && yarn run build-dev
 
 deploy:
   provider: heroku
