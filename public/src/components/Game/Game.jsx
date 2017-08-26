@@ -8,29 +8,33 @@ const API_URL = process.env.API_URL;
  * Game component
  */
 class Game extends Component {
+	async fetchGameRules() {
+		const gameRules = {};
+
+		gameRules.grounds = await (await fetch(`${API_URL}/grounds`)).json();
+		gameRules.units = await (await fetch(`${API_URL}/units`)).json();
+
+		return gameRules;
+	}
 	/**
 	 * Hook called after component rendered
 	 */
 	componentDidMount() {
-		const gameRules = {};
-		fetch(`${API_URL}/grounds`)
-			.then((response) => response.json())
-			.then((grounds) => {
-				gameRules.grounds = grounds;
-			})
-			.catch((error) => logger.error(error));
-		const config = {
-			divIdName:   'game',
-			height:      window.innerHeight - 100,
-			width:       window.innerWidth - 50,
-			tokenPlayer: this.props.tokenPlayer,
-			shortIdRoom: this.props.shortIdRoom,
-			socketUrl:   WEBSOCKETS_URL,
-			gameRules,
-		};
-		const landsWar = new LandsWar.default(config);
-		landsWar.start().catch((error) => {
-			logger.error(error);
+		this.fetchGameRules().then((gameRules) => {
+			const config = {
+				divIdName:   'game',
+				height:      window.innerHeight - 100,
+				width:       window.innerWidth - 50,
+				tokenPlayer: this.props.tokenPlayer,
+				shortIdRoom: this.props.shortIdRoom,
+				socketUrl:   WEBSOCKETS_URL,
+				gameRules,
+			};
+
+			const landsWar = new LandsWar.default(config); // eslint-disable-line new-cap
+			landsWar.start().catch((error) => {
+				logger.error(error);
+			});
 		});
 	}
 

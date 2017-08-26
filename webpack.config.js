@@ -86,12 +86,12 @@ const webpackConfig = {
 			template: `!!html-loader!${publicFolder}/index.html`,
 		}),
 		new CopyWebpackPlugin([
-			{ from: './public/game/public/dist/phaser.min.js', to: `${distFolder}/phaser.min.js` },
-			{ from: './public/game/public/dist/socket.io.min.js', to: `${distFolder}/socket.io.min.js` },
-			{ from: './public/game/public/dist/landswar-game.js', to: `${distFolder}/landswar-game.js` },
-			{ from: './public/game/public/dist/styles.css', to: `${distFolder}/styles.css` },
-			{ from: './public/game/public/dist/track-webfont.woff', to: `${distFolder}/track-webfont.woff` },
-			{ from: './public/game/public/dist/track-webfont.woff2', to: `${distFolder}/track-webfont.woff2` },
+			{ from: './node_modules/@landswar/landswar-game/public/dist/phaser.min.js', to: `${distFolder}/phaser.min.js` },
+			{ from: './node_modules/@landswar/landswar-game/public/dist/socket.io.min.js', to: `${distFolder}/socket.io.min.js` },
+			{ from: './node_modules/@landswar/landswar-game/public/dist/landswar-game.js', to: `${distFolder}/landswar-game.js` },
+			{ from: './node_modules/@landswar/landswar-game/public/dist/styles.css', to: `${distFolder}/styles.css` },
+			{ from: './node_modules/@landswar/landswar-game/public/dist/track-webfont.woff', to: `${distFolder}/track-webfont.woff` },
+			{ from: './node_modules/@landswar/landswar-game/public/dist/track-webfont.woff2', to: `${distFolder}/track-webfont.woff2` },
 		]),
 	],
 	devServer: {
