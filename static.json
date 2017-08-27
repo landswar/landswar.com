@@ -1,6 +1,3 @@
 {
-  "root": "public/dist",
-  "routes": {
-    "/**": "public/dist/index.html"
-  }
+  "root": "public/dist"
 }
