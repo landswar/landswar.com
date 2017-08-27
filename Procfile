@@ -1,1 +1,1 @@
-web: npm run build-dev
+web: yarn && yarn run build-dev
