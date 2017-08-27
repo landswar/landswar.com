@@ -9,8 +9,8 @@
     "build-beta": "NODE_ENV=beta webpack",
     "build-dev": "NODE_ENV=development webpack",
     "lint": "eslint .",
-	"fix-code": "eslint . --fix",
-	"postinstall": "yarn run build-dev"
+    "fix-code": "eslint . --fix",
+    "postinstall": "yarn add --force node-sass && yarn run build-dev"
   },
   "repository": {
     "type": "git",
@@ -57,7 +57,7 @@
     "lodash._baseassign": "^3.2.0",
     "lodash._createassigner": "^3.1.1",
     "loglevel": "^1.4.1",
-    "node-sass": "^4.5.2",
+    "node-sass": "^4.5.3",
     "p-map": "^1.1.1",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.10",
