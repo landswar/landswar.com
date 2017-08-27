@@ -9,7 +9,8 @@
     "build-beta": "NODE_ENV=beta webpack",
     "build-dev": "NODE_ENV=development webpack",
     "lint": "eslint .",
-    "fix-code": "eslint . --fix"
+	"fix-code": "eslint . --fix",
+	"postinstall": "yarn run build-dev"
   },
   "repository": {
     "type": "git",
