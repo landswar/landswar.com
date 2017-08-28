@@ -7,8 +7,7 @@
     "start": "webpack-dev-server -d",
     "build": "webpack",
     "lint": "eslint .",
-    "fix-code": "eslint . --fix",
-    "postinstall": "yarn run build"
+    "fix-code": "eslint . --fix"
   },
   "repository": {
     "type": "git",
