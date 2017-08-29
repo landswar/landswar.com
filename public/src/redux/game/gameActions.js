@@ -4,7 +4,6 @@ export const SET_GAME_STARTED = 'SET_GAME_STARTED';
  * @return {Function} [dispatch] return Promise: Start the game
  */
 export function startGame() {
-	console.log('game started');
 	return (dispatch) => dispatch({ type: SET_GAME_STARTED, gameStarted: true });
 }
 

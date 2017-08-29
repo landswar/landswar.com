@@ -10,6 +10,9 @@ export const SET_MAP = 'SET_MAP';
 export function getMaps() {
 	return (dispatch) => new Promise((resolve, reject) => {
 		get('/maps').then((response) => {
+			for (let i = 0; i < response.length; i++) {
+				response[i].data = JSON.parse(response[i].data);
+			}
 			dispatch({ type: SET_MAPS, maps: response });
 			resolve(true);
 		}).catch((error) => {
@@ -26,6 +29,7 @@ export function getMaps() {
 export function getMap(id) {
 	return (dispatch) => new Promise((resolve, reject) => {
 		get(`/maps/${id}`).then((response) => {
+			response.data = JSON.parse(response.data);
 			dispatch({ type: SET_MAP, map: response });
 			resolve(response);
 		}).catch((error) => {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import { getRoom } from '../../redux/room/roomActions';
-import { startGame } from '../../redux/game/gameActions';
+import { startGame, stopGame } from '../../redux/game/gameActions';
 import { getToken } from '../../helpers/utils';
 
 import Game from '../../components/Game/Game.jsx';
@@ -22,11 +22,18 @@ class Room extends Component {
 	}
 
 	/**
+ 	* Hook called when component unmounted
+	* stop the game
+ 	*/
+	componentWillUnmount() {
+		this.props.stopGame();
+	}
+
+	/**
  	* render for owner of the room
 	* @returns {JSX} return jsx
  	*/
 	renderOwner() {
-		console.log('here2');
 		return (
 			<div>
 			<FormRoom update/>
@@ -76,7 +83,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	getRoom:   (id) => dispatch(getRoom(id)),
-	startGame: (id) => dispatch(startGame(id)),
+	startGame: () => dispatch(startGame()),
+	stopGame:  () => dispatch(stopGame()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

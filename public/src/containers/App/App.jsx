@@ -19,6 +19,7 @@ import Player from '../Player/Player.jsx';
 
 // redux
 import { setNotif } from '../../redux/behavior/behaviorActions';
+import { getMaps } from '../../redux/map/mapActions';
 
 import './App.scss';
 
@@ -26,6 +27,14 @@ import './App.scss';
  * App component
  */
 class App extends Component {
+
+	/**
+ 	* Hook called before component mounted
+	* Fetch static data (like map or ground or unit etc...)
+ 	*/
+	componentWillMount() {
+		this.props.getMaps();
+	}
 
 	/**
  	* Hook called before states change
@@ -114,6 +123,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	redirect: (location) => dispatch(push(location)),
 	setNotif: (error) => dispatch(setNotif(error)),
+	getMaps:  () => dispatch(getMaps()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

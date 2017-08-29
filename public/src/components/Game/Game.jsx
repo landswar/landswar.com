@@ -8,6 +8,10 @@ const API_URL = process.env.API_URL;
  * Game component
  */
 class Game extends Component {
+	/**
+	 * fetch static data
+	 * @return {Object} game data
+	 */
 	async fetchGameRules() {
 		const gameRules = {};
 
@@ -23,8 +27,8 @@ class Game extends Component {
 		this.fetchGameRules().then((gameRules) => {
 			const config = {
 				divIdName:   'game',
-				height:      window.innerHeight - 100,
-				width:       window.innerWidth - 50,
+				height:      640, //window.innerHeight - 100,
+				width:       1280, //window.innerWidth - 50,
 				tokenPlayer: this.props.tokenPlayer,
 				shortIdRoom: this.props.shortIdRoom,
 				socketUrl:   WEBSOCKETS_URL,

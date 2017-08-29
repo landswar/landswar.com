@@ -2,6 +2,7 @@ import { actions } from 'react-redux-form';
 import { push } from 'react-router-redux';
 
 import { get, post, put, delet } from '../../helpers/fetch';
+import { setNotif } from '../behavior/behaviorActions';
 
 export const SET_ROOMS = 'SET_ROOMS';
 export const SET_ROOM = 'SET_ROOM';
@@ -78,6 +79,10 @@ export function updateRoom(room) {
 	return (dispatch) => new Promise((resolve, reject) => {
 		put(`/rooms/${room.shortid}`, { name: room.name, idMap: room.idMap }).then((response) => {
 			if (!response.error) {
+				dispatch(setNotif({
+					message: 'Room updated',
+					level:   'success',
+				}));
 				dispatch({ type: SET_ROOM, room: response });
 				resolve(response);
 			} else {

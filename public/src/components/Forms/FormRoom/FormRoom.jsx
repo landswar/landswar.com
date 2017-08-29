@@ -4,7 +4,6 @@ import { Errors, Form, Control } from 'react-redux-form';
 import { Button } from 'react-bootstrap';
 
 import { createRoom, updateRoom, deleteRoom } from '../../../redux/room/roomActions';
-import { getMaps } from '../../../redux/map/mapActions';
 
 import MapPreview from '../../MapPreview/MapPreview.jsx';
 import { minLength } from '../../../helpers/formValidators';
@@ -13,14 +12,6 @@ import { minLength } from '../../../helpers/formValidators';
  * Form to create or update a room
  */
 class FormRoom extends Component {
-	/**
- 	* Hook called before component mounted
-	* Fetch rooms
- 	*/
-	componentWillMount() {
-		this.props.getMaps();
-	}
-
 	/**
 	 * On form submit
 	 * @param {Object} room room model
@@ -46,6 +37,8 @@ class FormRoom extends Component {
 	* @returns {JSX} return jsx
  	*/
 	render() {
+		const currentMap = this.props.maps[this.props.maps.map((m) => m.id)
+													.indexOf(+this.props.roomForm.idMap)];
 		return (
 			<Form className="form-room" model="roomForm"
 				onSubmit={this.onSubmit.bind(this)} validateOn="submit">
@@ -72,7 +65,7 @@ class FormRoom extends Component {
 					{this.props.maps.map((map) => (<option key={map.id} value={map.id}>{map.name}</option>))}
 					</Control.select>
 					<Errors className="errors" model=".idMap"/>
-					<MapPreview id={this.props.roomForm.idMap} height="48" width="48"/>
+					<MapPreview map={currentMap} height="48" width="48"/>
 				</div>
 				{
 					this.props.update ? (
@@ -97,7 +90,6 @@ const mapDispatchToProps = (dispatch) => ({
 	createRoom: (room) => dispatch(createRoom(room)),
 	updateRoom: (room) => dispatch(updateRoom(room)),
 	deleteRoom: (room) => dispatch(deleteRoom(room)),
-	getMaps:    () => dispatch(getMaps()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormRoom);

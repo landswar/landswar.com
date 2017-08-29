@@ -28,11 +28,16 @@ class MapPreview extends Component {
 	* @returns {JSX} return jsx
  	*/
 	render() {
-		return (<img onClick={this.toggle.bind(this)}
-								src={`${API_URL}/maps/${this.props.id}/preview`}
+		return (
+			<div>
+				<img onClick={this.toggle.bind(this)}
+								src={`${API_URL}/maps/${this.props.map.id}/preview`}
 								height={this.props.height}
 								width={this.props.width}>
-						</img>);
+						</img>
+					<h2>width: {this.props.map.data.width}  height: {this.props.map.data.height}</h2>
+			</div>
+		);
 	}
 }
 
