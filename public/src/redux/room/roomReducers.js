@@ -1,15 +1,22 @@
 import { SET_ROOMS, SET_ROOM } from './roomActions';
 
-export const formNewRoom = {
+export const roomModel = {
 	name:      '',
 	maxPlayer: 2,
+	idMap:     1,
 };
 
 const initialState = {
 	rooms: [],
-	room: {},
+	room:  {},
 };
 
+/**
+ * Rooms reducer (property: rooms)
+ * @param {Object} state State of rooms
+ * @param {Object} action Action to reduce
+ * @return {Array} new state of room
+ */
 export function roomsReducers(state = initialState.rooms, action) {
 	switch (action.type) {
 	case SET_ROOMS:
@@ -19,6 +26,12 @@ export function roomsReducers(state = initialState.rooms, action) {
 	}
 }
 
+/**
+ * Room reducer (property: room)
+ * @param {Object} state State of room
+ * @param {Object} action Action to reduce
+ * @return {Array} new state of room
+ */
 export function roomReducers(state = initialState.room, action) {
 	switch (action.type) {
 	case SET_ROOM:

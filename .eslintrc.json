@@ -3,7 +3,8 @@
 		"browser": true
 	},
 	"globals": {
-		"logger": true
+		"logger": true,
+		"LandsWar": true
 	},
 	"parserOptions": {
 		"ecmaVersion": 8,

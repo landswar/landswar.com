@@ -52,7 +52,11 @@ Players.propTypes = {
 	isLogin: React.PropTypes.array,
 };
 
-const mapStateToProps = (state) => ({ players: state.players });
+const mapStateToProps = (state) => ({
+//	players: state.players.filter((p) => p.id !== state.user.id),
+	players: state.players,
+	user:    state.user,
+});
 
 const mapDispatchToProps = (dispatch) => ({
 	getPlayers: () => dispatch(getPlayers()),

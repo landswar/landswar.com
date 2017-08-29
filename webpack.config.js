@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -6,7 +7,8 @@ const publicFolder = path.resolve(__dirname, 'public/');
 const distFolder = `${publicFolder}/dist`;
 
 const env = process.env.NODE_ENV || 'development';
-const apiUrl = process.env.LANDSWAR_API_URL || 'http://127.0.0.1:3000';
+const apiUrl = process.env.LANDSWAR_API_URL || 'http://0.0.0.0:3000';
+const websocketsUrl = process.env.LANDSWAR_WEBSOCKETS_URL || 'http://0.0.0.0:3000';
 
 const webpackConfig = {
 	entry: [
@@ -31,8 +33,9 @@ const webpackConfig = {
 				],
 			},
 			{
-				test: /\.scss$/,
-				use:  [
+				test:    /\.scss$/,
+				exclude: /node_modules/,
+				use:     [
 					'style-loader',
 					'css-loader',
 					'sass-loader',
@@ -45,7 +48,13 @@ const webpackConfig = {
 				],
 			},
 			{
+				test: /\.css$/,
+				exclude: /node_modules/,
+				use:  'css-loader',
+			},
+			{
 				test: /\.html$/,
+				exclude: /node_modules/,
 				use:  [
 					{
 						loader: 'html-loader',
@@ -64,7 +73,8 @@ const webpackConfig = {
 	},
 	plugins: [
 		new webpack.EnvironmentPlugin({
-			API_URL: apiUrl,
+			API_URL:        apiUrl,
+			WEBSOCKETS_URL: websocketsUrl,
 		}),
 		new webpack.ProvidePlugin({
 			React: 'react',
@@ -78,6 +88,14 @@ const webpackConfig = {
 			title:    'LandsWar',
 			template: `!!html-loader!${publicFolder}/index.html`,
 		}),
+		new CopyWebpackPlugin([
+			{ from: './node_modules/landswar-game/public/dist/phaser.min.js', to: `${distFolder}/phaser.min.js` },
+			{ from: './node_modules/landswar-game/public/dist/socket.io.min.js', to: `${distFolder}/socket.io.min.js` },
+			{ from: './node_modules/landswar-game/public/dist/landswar-game.js', to: `${distFolder}/landswar-game.js` },
+			{ from: './node_modules/landswar-game/public/dist/styles.css', to: `${distFolder}/styles.css` },
+			{ from: './node_modules/landswar-game/public/dist/track-webfont.woff', to: `${distFolder}/track-webfont.woff` },
+			{ from: './node_modules/landswar-game/public/dist/track-webfont.woff2', to: `${distFolder}/track-webfont.woff2` },
+		]),
 	],
 	devServer: {
 		contentBase:        distFolder,

@@ -3,19 +3,19 @@ import { connect } from 'react-redux';
 import { Errors, Form, Control } from 'react-redux-form';
 import { Button } from 'react-bootstrap';
 
-import { updatePlayer } from '../../../redux/player/playerActions';
-import { minLength, required } from '../../../helpers/formValidators';
+import { createPlayer } from '../../../redux/player/playerActions';
+import { minLength, match, required } from '../../../helpers/formValidators';
 
 /**
  * Create player form
  */
-class FormPlayer extends Component {
+class FormSubscribe extends Component {
 	/**
 	 * On form submit
 	 * @param {Object} player player model
 	 */
 	onSubmit(player) {
-		this.props.updatePlayer(player);
+		this.props.createPlayer(player);
 	}
 
 	/**
@@ -25,9 +25,10 @@ class FormPlayer extends Component {
 	render() {
 		return (
       <Form
-        className="form-player"
+        className="form-subscribe"
         model="user"
         onSubmit={this.onSubmit.bind(this)}
+        validators={{ '': { passwordsMatch: match('password', 'passwordConfirm') } }}
         validateOn="submit">
         <Errors className="errors" model="user" show="touched"
         messages={{ passwordsMatch: 'Password confirmation error' }}/>
@@ -48,7 +49,18 @@ class FormPlayer extends Component {
             className="errors" model=".nickname" show="touched"
             messages={{ minLength: 'Your nickname must have at least 3 characters' }}/>
         </div>
-        <Button className="btn-primary" type="submit">Update</Button>
+        <div className="form-group">
+          <label>Password</label>
+          <Control type="password" className="form-control" model=".password"
+          placeholder="Password" validators={{ require: required }}/>
+          <Errors className="errors" show="touched" model=".password" messages={{ require: 'Password is required' }}/>
+        </div>
+        <div className="form-group">
+          <label>Password confirmation</label>
+          <Control type="password" className="form-control" model=".passwordConfirm"
+          placeholder="Password confirmation"/>
+        </div>
+        <Button className="btn-primary" type="submit">Create</Button>
       </Form>
 		);
 	}
@@ -57,8 +69,8 @@ class FormPlayer extends Component {
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-	updatePlayer: (player) =>
-		dispatch(updatePlayer(player)),
+	createPlayer: (player) =>
+		dispatch(createPlayer(player)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormPlayer);
+export default connect(mapStateToProps, mapDispatchToProps)(FormSubscribe);

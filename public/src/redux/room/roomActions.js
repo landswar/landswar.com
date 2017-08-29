@@ -1,15 +1,15 @@
 import { actions } from 'react-redux-form';
 import { push } from 'react-router-redux';
 
-import { get, post } from '../../helpers/fetch';
+import { get, post, put, delet } from '../../helpers/fetch';
+import { setNotif } from '../behavior/behaviorActions';
 
 export const SET_ROOMS = 'SET_ROOMS';
 export const SET_ROOM = 'SET_ROOM';
 
 /**
  * GET /rooms
- * @return {Function} get all room
- * TODO refactor with async await !!!
+ * @return {Function} [dispatch] return Promise: Get all rooms
  */
 export function getRooms() {
 	return (dispatch) => new Promise((resolve, reject) => {
@@ -29,13 +29,13 @@ export function getRooms() {
 /**
  * GET /room
  * @param {String} id shortid of the room to get
- * @return {Function} get a specific room
- * TODO refactor with async await !!!
+ * @return {Function} [dispatch] return Promise: Get specific room
  */
 export function getRoom(id) {
 	return (dispatch) => new Promise((resolve, reject) => {
 		get(`/rooms/${id}`).then((response) => {
 			if (!response.error) {
+				dispatch(actions.change('roomForm', response));
 				dispatch({ type: SET_ROOM, room: response });
 				resolve(response);
 			} else {
@@ -47,13 +47,18 @@ export function getRoom(id) {
 	});
 }
 
+/**
+ * POST /room
+ * @param {String} room Room to create
+ * @return {Function} [dispatch] return Promise: Creating new room
+ */
 export function createRoom(room) {
 	return (dispatch) => {
-		dispatch(actions.submit('newRoom', new Promise((resolve, reject) => {
-			post('/rooms', { name: room.name }).then((response) => {
+		dispatch(actions.submit('roomForm', new Promise((resolve, reject) => {
+			post('/rooms', { name: room.name, idMap: room.idMap }).then((response) => {
 				if (!response.error) {
-					dispatch(push(`/room/${response.shortid}`))
-					//dispatch(getRooms());
+					dispatch({ type: SET_ROOM, room: response });
+					dispatch(push(`/room/${response.shortid}`));
 					resolve(response);
 				} else {
 					reject(new Error(response.error));
@@ -63,4 +68,49 @@ export function createRoom(room) {
 			});
 		})));
 	};
+}
+
+/**
+ * PUT /room
+ * @param {String} room Room to update
+ * @return {Function} [dispatch] return Promise: Updating room
+ */
+export function updateRoom(room) {
+	return (dispatch) => new Promise((resolve, reject) => {
+		put(`/rooms/${room.shortid}`, { name: room.name, idMap: room.idMap }).then((response) => {
+			if (!response.error) {
+				dispatch(setNotif({
+					message: 'Room updated',
+					level:   'success',
+				}));
+				dispatch({ type: SET_ROOM, room: response });
+				resolve(response);
+			} else {
+				reject(new Error(response.error));
+			}
+		}).catch((error) => {
+			reject(error);
+		});
+	});
+}
+
+/**
+ * PUT /room
+ * @param {String} shortid shortid of the room to delete
+ * @return {Function} [dispatch] return Promise: Updating room
+ */
+export function deleteRoom(shortid) {
+	return (dispatch) => new Promise((resolve, reject) => {
+		delet(`/rooms/${shortid}`).then((response) => {
+			if (!response.error) {
+				dispatch({ type: SET_ROOM, room: response });
+				dispatch(push('/rooms'));
+				resolve(response);
+			} else {
+				reject(new Error(response.error));
+			}
+		}).catch((error) => {
+			reject(error);
+		});
+	});
 }

@@ -1,11 +1,11 @@
 import { Component } from 'react';
-//import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
 // import {Button} from 'react-bootstrap';
 
 import './Login.scss';
 
 import FormLogin from '../../components/Forms/FormLogin/FormLogin.jsx';
-import FormPlayer from '../../components/Forms/FormPlayer/FormPlayer.jsx';
+import FormSubscribe from '../../components/Forms/FormSubscribe/FormSubscribe.jsx';
 
 /**
  * Login/Create player container
@@ -39,7 +39,7 @@ class LoginContainer extends Component {
                 {
                     this.state.showLogin ?
                     (<FormLogin history={this.props.history}/>) :
-                    (<FormPlayer history={this.props.history}/>)
+                    (<FormSubscribe history={this.props.history}/>)
                 }
 								<div className="footer-login">
 									<a className="item" onClick={this.toggleForm.bind(this)}>{this.state.showLogin ? 'Subscribe' : 'Login'}</a>

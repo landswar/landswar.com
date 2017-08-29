@@ -1,6 +1,7 @@
 import { actions } from 'react-redux-form';
 
-import { post, get } from '../../helpers/fetch';
+import { post } from '../../helpers/fetch';
+import { SET_PLAYER, getFriends, getFriendRequest } from '../player/playerActions';
 
 export const SET_LOGIN = 'SET_LOGIN';
 
@@ -34,24 +35,40 @@ function setLogout() {
 }
 
 /**
+ * Helper function when login successfully
+ * @param {Function} dispatch dispatch
+ * @param {Object} json json response
+ * @param {String} token token
+ */
+function successLogin(dispatch, json, token) {
+	dispatch(setLogin(token));
+	dispatch({ type: SET_PLAYER, player: json });
+	dispatch(actions.change('user', json));
+	dispatch(actions.reset('loginForm', json));
+	dispatch(getFriends());
+	dispatch(getFriendRequest());
+}
+
+/**
  * POST /login
  * request login
  * @param {String} id nickname or email
  * @param {String} password password
- * @returns {Function} login request
+ * @return {Function} [dispatch] return Promise: Login request
  */
 export function login(id, password) {
 	return (dispatch) =>
-		dispatch(actions.submit('user', new Promise((resolve, reject) => {
+		dispatch(actions.submit('loginForm', new Promise((resolve, reject) => {
 			post('/login', {
 				id,
 				password,
-			}).then((json) => {
-				dispatch(setLogin(json.token));
-				dispatch(actions.change('user', json));
+			})
+			.then((json) => {
+				successLogin(dispatch, json, json.token);
 				resolve(json);
-			}).catch((error) => {
-				reject(error);
+			})
+			.catch((error) => {
+				reject(error.message);
 			});
 		})));
 }
@@ -60,15 +77,15 @@ export function login(id, password) {
  * POST /checkToken
  * request checkToken
  * @param {String} token Token to check
- * @returns {Function} login request
+ * @return {Function} [dispatch] return Promise: Login request
  */
 export function loginByToken(token) {
 	return (dispatch) =>
 		post('/checkToken', {
 			token,
-		}).then((json) => {
-			dispatch(setLogin(token));
-			dispatch(actions.change('user', json));
+		})
+		.then((json) => {
+			successLogin(dispatch, json, token);
 		}).catch((error) => {
 			dispatch(setLogout());
 			logger.error(error);
@@ -78,10 +95,11 @@ export function loginByToken(token) {
 /**
  * POST /logout
  * request logout
- * @returns {Function} logout request
+ * @return {Function} [dispatch] return Promise: Logout request
  */
 export function logout() {
 	return (dispatch) => {
+		dispatch({ type: SET_PLAYER, player: {} });
 		dispatch(actions.reset('user'));
 		dispatch(setLogout());
 	};
